@@ -3,99 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L’Occhio Oscuro – Unveiling the Hidden</title>
+    <title>L'Occhio Oscuro</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="torch-overlay"></div>
-    <section id="hero">
-        <div id="fog-layer"></div>
-        <h1>Unveiling the Hidden</h1>
-        <button id="enter-btn">Enter</button>
+    <div class="overlay"></div>
+    <header class="navbar">
+        <div class="logo">
+            <img src="your-logo.png" alt="L'Occhio Oscuro Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="home" class="hero">
+        <h1 class="main-title">GROWING SMARTER WITH AI</h1>
+        <p class="sub-title">Unveiling the Hidden</p>
+        <a href="#collection" class="cta-button">Explore</a>
     </section>
-
-    <div id="parallax">
-        <img src="lush-jungle-temple-background-.jpg" class="parallax-layer back">
-        <img src="mystical-ancient-gateway-stockc.jpg" class="parallax-layer mid">
-        <img src="mossy-stone-sphere-texture_538.jpg" id="boulder">
-    </div>
-
-    <section id="temple">
-        <div class="portal-transition"></div>
-        <h2>Descend Deeper</h2>
-        <p>Explore the secrets of L’Occhio Oscuro's luxury collection.</p>
+    
+    <section id="about" class="content-section">
+        <h2>About</h2>
+        <p>Experience a journey through AI-driven fashion and timeless elegance.</p>
     </section>
-
-    <div id="map-overlay">
-        <img src="old-vintage-world-map.jpg" id="treasure-map">
-        <button id="close-map">Close Map</button>
-    </div>
-
-    <section id="collection">
-        <div class="fog-effect"></div>
-        <h2>Ancient Relics – Exclusive Collection</h2>
-        <div id="product-carousel">
-            <div class="product-card">
-                <img src="image.png" alt="Product 1">
-                <h3>Artifact #1</h3>
-                <p>Price: $9,800</p>
-            </div>
-            <div class="product-card">
-                <img src="image.png" alt="Product 2">
-                <h3>Artifact #2</h3>
-                <p>Price: $12,000</p>
-            </div>
+    
+    <section id="collection" class="content-section">
+        <h2>Collection</h2>
+        <div class="product-grid">
+            <div class="product-item"> <img src="design1.jpg" alt="Product 1"></div>
+            <div class="product-item"> <img src="design2.jpg" alt="Product 2"></div>
+            <div class="product-item"> <img src="design3.jpg" alt="Product 3"></div>
         </div>
     </section>
-
+    
     <footer>
-        <p>&copy; 2025 L’Occhio Oscuro. All rights reserved.</p>
-        <div id="social-links">
-            <a href="#">Instagram</a>
-            <a href="#">Twitter</a>
-            <a href="#">Facebook</a>
-        </div>
+        <p>&copy; 2025 L'Occhio Oscuro. All Rights Reserved.</p>
     </footer>
-
-    <script>
-        document.getElementById('enter-btn').addEventListener('click', function() {
-            document.getElementById('torch-overlay').style.display = 'none';
-            document.querySelector('#hero').classList.add('fade-out');
-            setTimeout(() => document.getElementById('parallax').classList.add('fade-in'), 1000);
-        });
-
-        document.addEventListener('mousemove', function(event) {
-            const torch = document.getElementById('torch-overlay');
-            torch.style.top = event.clientY + 'px';
-            torch.style.left = event.clientX + 'px';
-        });
-
-        window.addEventListener('scroll', function() {
-            const boulder = document.getElementById('boulder');
-            boulder.style.transform = `translateY(${window.scrollY * 0.3}px) rotate(${window.scrollY}deg)`;
-        });
-
-        document.querySelectorAll('.product-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'scale(1.05)';
-                card.style.boxShadow = '0 0 10px gold';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'scale(1)';
-                card.style.boxShadow = 'none';
-            });
-        });
-
-        document.querySelector('.portal-transition').addEventListener('click', function() {
-            const portal = document.createElement('div');
-            portal.classList.add('portal-effect');
-            document.body.appendChild(portal);
-            setTimeout(() => portal.remove(), 1000);
-        });
-
-        document.getElementById('close-map').addEventListener('click', function() {
-            document.getElementById('map-overlay').style.display = 'none';
-        });
-    </script>
 </body>
 </html>
