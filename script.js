@@ -1,19 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Variables for smooth scrolling / parallax effects
+  // Smooth scrolling/parallax variables
   let currentScroll = 0;
   let targetScroll = window.scrollY;
   const easeFactor = 0.1;
-
-  // Elements for parallax and temple fade effects
   const templeLayer = document.querySelector(".temple-layer");
   const navbar = document.querySelector(".navbar");
-  const torchOverlay = document.querySelector(".torch-overlay");
+  const rollingBoulder = document.querySelector(".rolling-boulder");
 
-  // Update target scroll and trigger fade-ins on scroll
+  // Torch elements
+  const torchOverlay = document.querySelector(".torch-overlay");
+  const torchIconCursor = document.querySelector(".torch-icon-cursor");
+  const torchOnWall = document.querySelector(".torch-on-wall");
+  let torchRevealed = false; // flag to indicate if user clicked to reveal site
+
+  // Update scroll target and trigger fade-in on scroll
   window.addEventListener("scroll", () => {
     targetScroll = window.scrollY;
-
-    // Fade in elements with the .fade-in class when near viewport
     document.querySelectorAll(".fade-in").forEach((element) => {
       const rect = element.getBoundingClientRect();
       if (rect.top < window.innerHeight * 0.85) {
@@ -22,19 +24,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Smooth update loop for parallax and temple fade effects
+  // Smooth update loop for parallax, temple fade, navbar, and boulder rotation
   function smoothUpdate() {
     currentScroll += (targetScroll - currentScroll) * easeFactor;
     const maxScroll = document.body.scrollHeight - window.innerHeight;
 
-    // Apply parallax effect on elements with the .parallax class
+    // Parallax effect for elements with .parallax
     document.querySelectorAll(".parallax").forEach((layer) => {
       const depth = parseFloat(layer.getAttribute("data-depth")) || 0.5;
       const movement = currentScroll * depth;
       layer.style.transform = `translateY(${movement}px)`;
     });
 
-    // Fade in temple layer based on scroll depth
+    // Update temple layer opacity based on scroll depth
     if (templeLayer) {
       const templeMaxOpacity = parseFloat(
         getComputedStyle(document.documentElement).getPropertyValue("--temple-max-opacity")
@@ -43,31 +45,62 @@ document.addEventListener("DOMContentLoaded", () => {
       templeLayer.style.opacity = newOpacity;
     }
 
-    // Update navbar style based on scroll
+    // Update navbar styling based on scroll
     if (currentScroll > 50) {
       navbar.classList.add("scrolled");
     } else {
       navbar.classList.remove("scrolled");
     }
 
+    // Animate rolling boulder rotation based on scroll (adjust factor as needed)
+    if (rollingBoulder) {
+      const rotation = currentScroll / 5; // Adjust rotation speed factor here
+      rollingBoulder.style.transform = `rotate(${rotation}deg)`;
+    }
+
     requestAnimationFrame(smoothUpdate);
   }
   smoothUpdate();
 
-  // Torchlight Effect: Update the torch center based on mouse movement
+  // Torchlight effect: Update the torch overlay and icon to follow the cursor
   window.addEventListener("mousemove", (e) => {
-    // Only update if the torch overlay exists (i.e. hasn't been disabled)
-    if (torchOverlay) {
+    if (torchOverlay && !torchRevealed) {
       torchOverlay.style.setProperty("--torch-x", `${e.pageX}px`);
       torchOverlay.style.setProperty("--torch-y", `${e.pageY}px`);
     }
+    if (torchIconCursor && !torchRevealed) {
+      torchIconCursor.style.left = `${e.pageX}px`;
+      torchIconCursor.style.top = `${e.pageY}px`;
+    }
   });
 
-  // On any click, disable the torch effect and reveal the entire site.
+  // On click, animate the torch reveal transition:
+  // - Fade out the torch overlay and remove it
+  // - Fade out the torch icon cursor
+  // - Show the torch fixed on the wall
   document.addEventListener("click", () => {
-    if (torchOverlay) {
-      // Remove the torch overlay from the DOM so the site remains fully visible.
-      torchOverlay.remove();
+    if (!torchRevealed) {
+      torchRevealed = true;
+
+      // Animate torch overlay fade-out and then remove it
+      if (torchOverlay) {
+        torchOverlay.style.transition = "opacity 0.5s ease";
+        torchOverlay.style.opacity = "0";
+        setTimeout(() => {
+          torchOverlay.remove();
+        }, 500);
+      }
+
+      // Fade out the torch icon cursor
+      if (torchIconCursor) {
+        torchIconCursor.style.transition = "opacity 0.5s ease";
+        torchIconCursor.style.opacity = "0";
+      }
+
+      // Reveal the torch on the wall (remove .hidden)
+      if (torchOnWall) {
+        torchOnWall.classList.remove("hidden");
+      }
     }
   });
 });
