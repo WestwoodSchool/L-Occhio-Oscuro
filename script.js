@@ -58,10 +58,10 @@ document.querySelector("form").addEventListener("submit", function(e) {
     this.reset();
 });
 
-// Subtle Background Light Effect on Mouse Movement
+// Spotlight Effect on Hero Title
 document.addEventListener("mousemove", function(e) {
-    const overlay = document.querySelector(".overlay");
+    const title = document.querySelector(".main-title");
     const x = e.clientX / window.innerWidth * 100;
     const y = e.clientY / window.innerHeight * 100;
-    overlay.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,1) 100%)`;
+    title.style.textShadow = `${(x - 50) / 5}px ${(y - 50) / 5}px 30px rgba(212, 175, 55, 0.8)`;
 });
