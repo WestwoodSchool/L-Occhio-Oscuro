@@ -46,6 +46,28 @@ body {
     color: #c3a157;
 }
 
+/* Jungle-Themed Buttons */
+.button {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 2px solid #c3a157;
+    background: linear-gradient(45deg, #1a3d1a, #2b5c2b);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.button:hover {
+    background: linear-gradient(45deg, #2b5c2b, #3c7f3c);
+    border-color: #a38742;
+    transform: scale(1.05);
+}
+
 /* Hero Section */
 .hero {
     position: relative;
@@ -80,6 +102,7 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     transition: 0.3s;
+    border-radius: 8px;
 }
 .cta-button:hover {
     background: #a38742;
@@ -151,6 +174,7 @@ body {
     border: none;
     cursor: pointer;
     transition: 0.3s;
+    border-radius: 8px;
 }
 .newsletter button:hover {
     background: #a38742;
