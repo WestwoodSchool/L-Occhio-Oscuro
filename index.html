@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>L'Occhio Oscuro</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
 </head>
 <body>
   <!-- Background Layers -->
   <div class="jungle-bg"></div>
   <div class="temple-layer"></div>
-  <div class="scroll-overlay"></div>
 
   <!-- Navigation Bar -->
   <header class="navbar">
     <div class="logo-container">
-      <img src="image.png" alt="L'Occhio Oscuro Logo" class="nav-logo">
+      <img src="image.png" alt="L'Occhio Oscuro Logo" class="nav-logo" />
     </div>
     <nav>
       <ul>
@@ -27,7 +29,7 @@
     </nav>
   </header>
 
-  <!-- Hero Section with Image Background -->
+  <!-- Hero Section -->
   <section class="hero parallax" data-depth="0.2">
     <div class="hero-bg"></div>
     <div class="hero-overlay fade-in">
@@ -42,25 +44,23 @@
     <p>Where elegance meets mystery. A collection crafted for those who seek the unseen.</p>
   </section>
 
-  <!-- Featured Collection with Torchlight Effect -->
+  <!-- Featured Collection -->
   <section class="featured-collection fade-in" id="shop">
     <h2>Collection</h2>
     <div class="product-carousel">
       <div class="product card">
-        <img src="Screenshot 2025-02-17 224838.png" alt="Design 1">
+        <img src="Screenshot 2025-02-17 224838.png" alt="Design 1" />
         <h3>Shirt 1</h3>
       </div>
       <div class="product card">
-        <img src="design2.jpg" alt="Design 2">
+        <img src="design2.jpg" alt="Design 2" />
         <h3>Jungle Relic Hoodie</h3>
       </div>
       <div class="product card">
-        <img src="design3.jpg" alt="Design 3">
+        <img src="design3.jpg" alt="Design 3" />
         <h3>Veil of Shadows</h3>
       </div>
     </div>
-    <!-- Torch overlay: starts fully dark -->
-    <div class="torch-overlay full-dark"></div>
   </section>
 
   <!-- Newsletter Section -->
@@ -68,7 +68,7 @@
     <h2>Join</h2>
     <p>Early access to exclusives.</p>
     <form>
-      <input type="email" placeholder="Enter your email" required>
+      <input type="email" placeholder="Enter your email" required />
       <button type="submit">Submit</button>
     </form>
   </section>
@@ -77,6 +77,9 @@
   <footer>
     <p>&copy; 2025 L'Occhio Oscuro. All rights reserved.</p>
   </footer>
+
+  <!-- Torch overlay that covers the entire site, revealing content only in a circle around the cursor -->
+  <div class="torch-overlay"></div>
 
   <script src="script.js"></script>
 </body>
