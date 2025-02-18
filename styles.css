@@ -1,175 +1,388 @@
-/* General Styles */
+/*---------------------------------------------
+  Global Settings & CSS Variables
+---------------------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --gold-color: #d4af37;
+  --jungle-green: #3a5f0b;
+  --dark-bg: #0a0a0a;
+  --light-bg: #111;
+  --overlay-max-opacity: 0.3; /* For darkening overlay */
+  --temple-max-opacity: 0.7;  /* Maximum temple layer opacity */
+  --transition-duration: 0.4s;
+}
+
+/*---------------------------------------------
+  Base Styles
+---------------------------------------------*/
 body {
-    font-family: 'Playfair Display', serif;
-    margin: 0;
-    padding: 0;
-    background-color: #0a0a0a;
-    color: #e0e0e0;
+  font-family: 'Playfair Display', serif;
+  background-color: var(--dark-bg);
+  color: #e0e0e0;
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* Navbar */
+/*---------------------------------------------
+  Background Layers
+---------------------------------------------*/
+/* Jungle Layer (static lush background) */
+.jungle-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('jungle.jpg') center center/cover no-repeat;
+  z-index: -3;
+}
+
+/* Temple Layer (fades in on scroll) */
+.temple-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('temple-texture.png') center center/cover no-repeat;
+  z-index: -2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Subtle darkening overlay */
+.scroll-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/*---------------------------------------------
+  Navbar
+---------------------------------------------*/
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    position: fixed;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  position: fixed;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  transition: background 0.3s ease;
 }
 
-/* Logo */
-.logo-container {
-    display: flex;
-    align-items: center;
+.navbar.scrolled {
+  background: rgba(0, 0, 0, 0.9);
 }
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
 .nav-logo {
-    max-height: 50px;
-    width: auto;
-    display: block;
+  max-height: 50px;
+  width: auto;
 }
 
 .navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 30px;
+  list-style: none;
+  display: flex;
+  gap: 30px;
 }
+
 .navbar a {
-    text-decoration: none;
-    color: #e0e0e0;
-    font-size: 18px;
-    transition: 0.3s;
+  text-decoration: none;
+  color: #e0e0e0;
+  font-size: 18px;
+  position: relative;
+  transition: color 0.3s;
 }
+
 .navbar a:hover {
-    color: #c3a157;
+  color: var(--gold-color);
 }
 
-/* Hero Section */
+.navbar a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: var(--gold-color);
+  left: 0;
+  bottom: -5px;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+/*---------------------------------------------
+  Hero Section with Video Background
+---------------------------------------------*/
 .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
+
 .hero-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
 .hero-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
 }
+
 .hero h1 {
-    font-size: 60px;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+  font-size: 60px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeInUp 1s forwards;
 }
+
 .cta-button {
-    display: inline-block;
-    padding: 15px 40px;
-    background: #c3a157;
-    color: #0a0a0a;
-    text-decoration: none;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: 0.3s;
-    border-radius: 8px;
+  display: inline-block;
+  padding: 15px 40px;
+  background: var(--gold-color);
+  color: var(--dark-bg);
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background 0.3s, transform 0.3s;
+  border-radius: 8px;
 }
+
 .cta-button:hover {
-    background: #a38742;
+  background: #b89732;
+  transform: translateY(-3px);
 }
 
-/* Featured Collection */
+/*---------------------------------------------
+  About Section
+---------------------------------------------*/
+.about {
+  padding: 100px 50px;
+  text-align: center;
+  background: var(--light-bg);
+}
+
+.about h2 {
+  font-size: 42px;
+  color: var(--gold-color);
+  margin-bottom: 20px;
+}
+
+.about p {
+  font-size: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/*---------------------------------------------
+  Featured Collection & Product Cards
+---------------------------------------------*/
 .featured-collection {
-    text-align: center;
-    padding: 100px 50px;
+  padding: 100px 50px;
+  text-align: center;
 }
+
 .featured-collection h2 {
-    font-size: 42px;
-    color: #c3a157;
+  font-size: 42px;
+  color: var(--gold-color);
+  margin-bottom: 40px;
 }
+
 .product-carousel {
-    display: flex;
-    gap: 30px;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
 }
 
-/* Card Design for Products */
 .card {
-    width: 190px;
-    height: 254px;
-    border-radius: 30px;
-    background: #212121;
-    box-shadow: 15px 15px 30px rgb(25, 25, 25),
-                -15px -15px 30px rgb(60, 60, 60);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-    padding: 10px;
+  width: 220px;
+  background: var(--dark-bg);
+  border: 2px solid var(--gold-color);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  padding: 10px;
 }
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
 .card img {
-    width: 100%;
-    height: auto;
-    border-radius: 20px;
-    transition: transform 0.3s ease-in-out;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
 }
+
 .card img:hover {
-    transform: scale(1.05);
+  transform: scale(1.1);
 }
+
 .card h3 {
-    margin-top: 10px;
-    font-size: 18px;
-    color: #c3a157;
+  margin-top: 10px;
+  font-size: 20px;
+  color: var(--gold-color);
+  transition: text-shadow 0.3s ease;
 }
 
-/* Newsletter */
+.card:hover h3 {
+  text-shadow: 0 0 8px var(--gold-color);
+}
+
+/*---------------------------------------------
+  Newsletter Section
+---------------------------------------------*/
 .newsletter {
-    text-align: center;
-    padding: 80px 50px;
-    background: #111;
-}
-.newsletter h2 {
-    font-size: 36px;
-    color: #c3a157;
-}
-.newsletter form {
-    margin-top: 20px;
-}
-.newsletter input {
-    padding: 15px;
-    width: 300px;
-    font-size: 16px;
-    border: none;
-    outline: none;
-}
-.newsletter button {
-    padding: 15px 30px;
-    background: #c3a157;
-    color: #0a0a0a;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-    border-radius: 8px;
-}
-.newsletter button:hover {
-    background: #a38742;
+  padding: 80px 50px;
+  text-align: center;
+  background: var(--light-bg);
 }
 
-/* Footer */
+.newsletter h2 {
+  font-size: 36px;
+  color: var(--gold-color);
+  margin-bottom: 20px;
+}
+
+.newsletter p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.newsletter form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.newsletter input {
+  padding: 15px;
+  width: 300px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.newsletter button {
+  padding: 15px 30px;
+  background: var(--gold-color);
+  color: var(--dark-bg);
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  border-radius: 8px;
+}
+
+.newsletter button:hover {
+  background: #b89732;
+  transform: translateY(-3px);
+}
+
+/*---------------------------------------------
+  Footer
+---------------------------------------------*/
 footer {
-    text-align: center;
-    padding: 30px;
-    background: #0a0a0a;
-    color: #777;
+  text-align: center;
+  padding: 30px;
+  background: var(--dark-bg);
+  color: #777;
+}
+
+/*---------------------------------------------
+  Fade-In Animation for Scroll-Triggered Elements
+---------------------------------------------*/
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/*---------------------------------------------
+  Keyframes
+---------------------------------------------*/
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*---------------------------------------------
+  Responsive Adjustments
+---------------------------------------------*/
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+  .hero h1 {
+    font-size: 40px;
+  }
+  .cta-button {
+    padding: 10px 30px;
+    font-size: 14px;
+  }
+  .about,
+  .featured-collection,
+  .newsletter {
+    padding: 60px 20px;
+  }
+  .card {
+    width: 180px;
+  }
+  .newsletter input {
+    width: 250px;
+  }
 }
