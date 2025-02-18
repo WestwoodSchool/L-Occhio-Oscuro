@@ -13,12 +13,15 @@ html {
 
 :root {
   --gold-color: #d4af37;
-  --jungle-green: #3a5f0b;
   --dark-bg: #0a0a0a;
   --light-bg: #111;
-  --overlay-max-opacity: 0.3; /* Overall dark overlay opacity */
-  --temple-max-opacity: 0.7;  /* Maximum opacity for temple layer */
+  --temple-max-opacity: 0.7; /* how strongly the temple layer shows */
   --transition-duration: 0.4s;
+
+  /* Torch effect radius & fade:
+     You can tweak the radius (350px) or fade edge (80%) for different results */
+  --torch-radius: 350px;
+  --torch-fade: 80%;
 }
 
 /*---------------------------------------------
@@ -55,21 +58,7 @@ body {
   height: 100%;
   background: url('temple-texture.png') center center/cover no-repeat;
   z-index: -2;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-/* Subtle darkening overlay */
-.scroll-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0;
+  opacity: 0; /* Fades in as user scrolls deeper */
   transition: opacity 0.3s ease;
 }
 
@@ -137,7 +126,7 @@ body {
 }
 
 /*---------------------------------------------
-  Hero Section with Image Background
+  Hero Section
 ---------------------------------------------*/
 .hero {
   position: relative;
@@ -146,13 +135,13 @@ body {
   overflow: hidden;
 }
 
-/* Use your specified hero image */
 .hero-bg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  /* Example hero image */
   background: url('lush-jungle-temple-background-with-ancient-ruins-evokes-sense-mystery-adventure_908344-67887.avif')
     center center/cover no-repeat;
   z-index: 1;
@@ -163,9 +152,11 @@ body {
   top: 50%;
   left: 50%;
   width: 100%;
+  max-width: 1200px;
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 10;
+  padding: 0 20px;
 }
 
 .hero h1 {
@@ -223,7 +214,7 @@ body {
 .featured-collection {
   padding: 100px 50px;
   text-align: center;
-  position: relative; /* For torch overlay positioning */
+  position: relative;
 }
 
 .featured-collection h2 {
@@ -279,26 +270,29 @@ body {
 }
 
 /*---------------------------------------------
-  Torch Overlay for Collection Section
+  Torch Overlay
+  Entire site is black except inside the torch radius.
 ---------------------------------------------*/
 .torch-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background: radial-gradient(
-    circle 200px at var(--torch-x, 50%) var(--torch-y, 50%),
-    transparent 0%,
-    rgba(0, 0, 0, 0.95) 80%
-  );
-  transition: background 0.3s ease, opacity 0.3s ease;
-  z-index: 2;
-}
+  z-index: 9999; /* On top of everything */
 
-.torch-overlay.full-dark {
-  background: rgba(0, 0, 0, 0.95);
+  /* 
+    The radial-gradient is transparent at the center (the 'light')
+    and black around it.
+    Tweak the radius or fade percentage to your liking.
+  */
+  background: radial-gradient(
+    circle var(--torch-radius) at var(--torch-x, 50%) var(--torch-y, 50%),
+    transparent 0%,
+    #000 var(--torch-fade)
+  );
+  transition: background 0.1s ease;
 }
 
 /*---------------------------------------------
