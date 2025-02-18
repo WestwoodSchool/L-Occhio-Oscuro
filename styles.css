@@ -15,13 +15,12 @@ html {
   --gold-color: #d4af37;
   --dark-bg: #0a0a0a;
   --light-bg: #111;
-  --temple-max-opacity: 0.7; /* how strongly the temple layer shows */
+  --temple-max-opacity: 0.7;  /* How strongly the temple layer shows */
   --transition-duration: 0.4s;
 
-  /* Torch effect radius & fade:
-     You can tweak the radius (350px) or fade edge (80%) for different results */
-  --torch-radius: 350px;
-  --torch-fade: 80%;
+  /* Torch effect settings */
+  --torch-radius: 500px;   /* The size of the light circle */
+  --torch-fade: 60%;       /* Where the light starts to fade to black */
 }
 
 /*---------------------------------------------
@@ -58,7 +57,7 @@ body {
   height: 100%;
   background: url('temple-texture.png') center center/cover no-repeat;
   z-index: -2;
-  opacity: 0; /* Fades in as user scrolls deeper */
+  opacity: 0;
   transition: opacity 0.3s ease;
 }
 
@@ -126,7 +125,7 @@ body {
 }
 
 /*---------------------------------------------
-  Hero Section
+  Hero Section with Centered Image & Overlay
 ---------------------------------------------*/
 .hero {
   position: relative;
@@ -141,12 +140,13 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  /* Example hero image */
+  /* Use your specified hero image */
   background: url('lush-jungle-temple-background-with-ancient-ruins-evokes-sense-mystery-adventure_908344-67887.avif')
     center center/cover no-repeat;
   z-index: 1;
 }
 
+/* Center the hero overlay perfectly */
 .hero-overlay {
   position: absolute;
   top: 50%;
@@ -270,32 +270,6 @@ body {
 }
 
 /*---------------------------------------------
-  Torch Overlay
-  Entire site is black except inside the torch radius.
----------------------------------------------*/
-.torch-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999; /* On top of everything */
-
-  /* 
-    The radial-gradient is transparent at the center (the 'light')
-    and black around it.
-    Tweak the radius or fade percentage to your liking.
-  */
-  background: radial-gradient(
-    circle var(--torch-radius) at var(--torch-x, 50%) var(--torch-y, 50%),
-    transparent 0%,
-    #000 var(--torch-fade)
-  );
-  transition: background 0.1s ease;
-}
-
-/*---------------------------------------------
   Newsletter Section
 ---------------------------------------------*/
 .newsletter {
@@ -383,6 +357,26 @@ footer {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/*---------------------------------------------
+  Torch Overlay – Entire Site is Black Except Inside Torch Radius
+---------------------------------------------*/
+.torch-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: radial-gradient(
+    circle var(--torch-radius) at var(--torch-x, 50%) var(--torch-y, 50%),
+    transparent 0%,
+    rgba(0, 0, 0, 0.6) var(--torch-fade),
+    #000 100%
+  );
+  transition: background 0.1s ease;
 }
 
 /*---------------------------------------------
