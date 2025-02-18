@@ -65,3 +65,15 @@ document.addEventListener("mousemove", function(e) {
     const y = e.clientY / window.innerHeight * 100;
     title.style.textShadow = `${(x - 50) / 5}px ${(y - 50) / 5}px 30px rgba(212, 175, 55, 0.8)`;
 });
+
+// Fog Effect
+const fogLayer = document.createElement("div");
+fogLayer.classList.add("fog-layer");
+document.body.appendChild(fogLayer);
+
+document.addEventListener("mousemove", function(e) {
+    const fog = document.querySelector(".fog-layer");
+    const x = e.clientX - fog.offsetWidth / 2;
+    const y = e.clientY - fog.offsetHeight / 2;
+    fog.style.transform = `translate(${x}px, ${y}px)`;
+});
