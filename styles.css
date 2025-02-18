@@ -1,306 +1,246 @@
-/*---------------------------------------------
-  Global Settings & CSS Variables
----------------------------------------------*/
+/* General Reset */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-:root {
-  --gold-color: #d4af37;
-  --dark-bg: #0a0a0a;
-  --light-bg: #111;
-  --temple-max-opacity: 0.7;
-  --transition-duration: 0.4s;
-  --torch-radius: 500px;
-  --torch-fade: 60%;
-}
-
-/*---------------------------------------------
-  Base Styles
----------------------------------------------*/
 body {
-  font-family: 'Playfair Display', serif;
-  background-color: var(--dark-bg);
-  color: #e0e0e0;
-  overflow-x: hidden;
-  position: relative;
+    background-color: #0a0a0a;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    overflow-x: hidden;
+    position: relative;
 }
 
-/*---------------------------------------------
-  Background Layers
----------------------------------------------*/
-.jungle-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('jungle.jpg') center center/cover no-repeat;
-  z-index: -3;
+/* Hero Section */
+#hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: url('lush-jungle-temple-background-.jpg') no-repeat center center/cover;
 }
 
-.temple-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('temple-texture.png') center center/cover no-repeat;
-  z-index: -2;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+#hero h1 {
+    font-size: 4rem;
+    color: gold;
+    text-shadow: 0px 0px 20px rgba(255, 215, 0, 0.8);
+    animation: fadeIn 2s ease-in-out;
 }
 
-/*---------------------------------------------
-  Navbar
----------------------------------------------*/
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 50px;
-  position: fixed;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  transition: background 0.3s ease;
+#enter-btn {
+    background: linear-gradient(90deg, gold, #c49102);
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    color: #0a0a0a;
+    font-weight: bold;
+    margin-top: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
-.navbar.scrolled {
-  background: rgba(0, 0, 0, 0.9);
+#enter-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 20px gold;
 }
 
-/*---------------------------------------------
-  Hero Section
----------------------------------------------*/
-.hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.hero-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('lush-jungle-temple-background-with-ancient-ruins-evokes-sense-mystery-adventure_908344-67887.avif')
-    center center/cover no-repeat;
-  z-index: 1;
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 10;
-  padding: 0 20px;
-}
-
-.hero h1 {
-  font-size: 60px;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  opacity: 0;
-  animation: fadeInUp 1s forwards;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 15px 40px;
-  background: var(--gold-color);
-  color: var(--dark-bg);
-  text-decoration: none;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: background 0.3s, transform 0.3s;
-  border-radius: 8px;
-}
-
-.cta-button:hover {
-  background: #b89732;
-  transform: translateY(-3px);
-}
-
-/*---------------------------------------------
-  Hidden Map Overlay
----------------------------------------------*/
-.hidden-map {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 600px;
-  background: rgba(0, 0, 0, 0.9);
-  padding: 20px;
-  border: 2px solid var(--gold-color);
-  border-radius: 10px;
-  z-index: 9999;
-  text-align: center;
-  display: none;
-}
-
-.hidden-map img {
-  width: 100%;
-  border-radius: 5px;
-}
-
-.hidden-map .close-map {
-  background: var(--gold-color);
-  color: var(--dark-bg);
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
-/*---------------------------------------------
-  Rolling Boulder
----------------------------------------------*/
-.rolling-boulder {
-  position: fixed;
-  right: 20px;
-  bottom: 50px;
-  width: 100px;
-  height: 100px;
-  z-index: 5000;
-  transition: transform 0.2s ease;
-}
-
-.rolling-boulder img {
-  width: 100%;
-  height: auto;
-  animation: roll infinite linear;
-}
-
-/*---------------------------------------------
-  Torchlight & Torch on Wall
----------------------------------------------*/
-.torch-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  background: radial-gradient(
-    circle var(--torch-radius) at var(--torch-x, 50%) var(--torch-y, 50%),
-    transparent 0%,
-    rgba(0, 0, 0, 0.6) var(--torch-fade),
-    #000 100%
-  );
-  transition: background 0.1s ease;
-}
-
-.torch-icon-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 50px;
-  height: 50px;
-  pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.2s ease;
-}
-
-.torch-on-wall {
-  position: fixed;
-  left: 30px;
-  bottom: 100px;
-  width: 80px;
-  height: 200px;
-  z-index: 11000;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  opacity: 1;
-}
-
-.torch-on-wall.hidden {
-  opacity: 0;
-  transform: translateY(50px);
-}
-
-/*---------------------------------------------
-  Portal Transition Effect
----------------------------------------------*/
-.portal-transition {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 400px;
-  z-index: 5000;
-  display: none;
-}
-
-.portal-transition img {
-  width: 100%;
-  animation: swirl 2s infinite linear;
-}
-
-/*---------------------------------------------
-  Keyframe Animations
----------------------------------------------*/
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes roll {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes swirl {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-  100% {
-    transform: rotate(360deg) scale(1.1);
-  }
-}
-
-/*---------------------------------------------
-  Responsive Adjustments
----------------------------------------------*/
-@media (max-width: 768px) {
-  .rolling-boulder {
-    width: 70px;
-    height: 70px;
-  }
-
-  .torch-icon-cursor {
-    width: 40px;
-    height: 40px;
-  }
-
-  .portal-transition {
+/* Torchlight Effect */
+#torch-overlay {
+    position: fixed;
     width: 200px;
     height: 200px;
-  }
+    background: radial-gradient(circle, rgba(255, 165, 0, 0.8) 10%, rgba(0, 0, 0, 0.9) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    mix-blend-mode: lighten;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Parallax Effect */
+#parallax {
+    position: relative;
+    height: 150vh;
+    overflow: hidden;
+}
+
+.parallax-layer {
+    position: absolute;
+    width: 100%;
+    height: auto;
+}
+
+.back {
+    transform: translateY(0);
+    transition: transform 0.2s ease-out;
+}
+
+.mid {
+    transform: translateY(20px);
+    transition: transform 0.4s ease-out;
+}
+
+/* Rolling Boulder */
+#boulder {
+    position: absolute;
+    width: 150px;
+    right: 10%;
+    top: 30%;
+    transition: transform 0.2s ease-out;
+}
+
+/* Portal Transition */
+.portal-effect {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 10%, rgba(0, 0, 0, 0.9) 80%);
+    opacity: 0;
+    animation: portalExpand 1s ease-in-out forwards;
+}
+
+@keyframes portalExpand {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(10);
+        opacity: 0;
+    }
+}
+
+/* Fog Effects */
+#fog-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('fog-effect.png') repeat;
+    opacity: 0.6;
+    animation: fogMove 20s infinite linear;
+}
+
+@keyframes fogMove {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100px);
+    }
+}
+
+/* Hidden Map */
+#map-overlay {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+}
+
+#treasure-map {
+    width: 100%;
+    border: 3px solid gold;
+}
+
+#close-map {
+    background: gold;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+/* Product Collection */
+#collection {
+    text-align: center;
+    padding: 100px 20px;
+    background: #1b1b1b;
+    position: relative;
+}
+
+.fog-effect {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('fog-effect.png') repeat;
+    opacity: 0.5;
+}
+
+#collection h2 {
+    font-size: 3rem;
+    color: gold;
+    text-shadow: 0px 0px 15px rgba(255, 215, 0, 0.8);
+    margin-bottom: 50px;
+}
+
+#product-carousel {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.product-card {
+    background: #222;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.product-card img {
+    width: 200px;
+    border: 2px solid gold;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 20px gold;
+}
+
+/* Footer */
+footer {
+    background: #111;
+    padding: 30px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#social-links a {
+    color: gold;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    #hero h1 {
+        font-size: 3rem;
+    }
+
+    #parallax {
+        height: 100vh;
+    }
+
+    #collection h2 {
+        font-size: 2rem;
+    }
+
+    #product-carousel {
+        flex-direction: column;
+        align-items: center;
+    }
 }
