@@ -1,106 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>L'Occhio Oscuro</title>
-  <!-- External CSS -->
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L’Occhio Oscuro – Unveiling the Hidden</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Background Layers -->
-  <div class="jungle-bg"></div>
-  <div class="temple-layer"></div>
+    <div id="torch-overlay"></div>
+    <section id="hero">
+        <div id="fog-layer"></div>
+        <h1>Unveiling the Hidden</h1>
+        <button id="enter-btn">Enter</button>
+    </section>
 
-  <!-- Navigation Bar -->
-  <header class="navbar">
-    <div class="logo-container">
-      <img src="image.png" alt="L'Occhio Oscuro Logo" class="nav-logo" />
+    <div id="parallax">
+        <img src="lush-jungle-temple-background-.jpg" class="parallax-layer back">
+        <img src="mystical-ancient-gateway-stockc.jpg" class="parallax-layer mid">
+        <img src="mossy-stone-sphere-texture_538.jpg" id="boulder">
     </div>
-    <nav>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#shop">Shop</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <!-- Hero Section with Centered Background & Title -->
-  <section class="hero parallax" data-depth="0.2">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay fade-in">
-      <h1>Unveiling the Hidden</h1>
-      <a href="#shop" class="cta-button">Enter</a>
+    <section id="temple">
+        <div class="portal-transition"></div>
+        <h2>Descend Deeper</h2>
+        <p>Explore the secrets of L’Occhio Oscuro's luxury collection.</p>
+    </section>
+
+    <div id="map-overlay">
+        <img src="old-vintage-world-map.jpg" id="treasure-map">
+        <button id="close-map">Close Map</button>
     </div>
-  </section>
 
-  <!-- Hidden Map Overlay -->
-  <div id="hidden-map" class="hidden-map">
-    <button class="close-map">Close</button>
-    <img src="old-vintage-world-map.jpg" alt="Ancient Treasure Map" />
-  </div>
+    <section id="collection">
+        <div class="fog-effect"></div>
+        <h2>Ancient Relics – Exclusive Collection</h2>
+        <div id="product-carousel">
+            <div class="product-card">
+                <img src="image.png" alt="Product 1">
+                <h3>Artifact #1</h3>
+                <p>Price: $9,800</p>
+            </div>
+            <div class="product-card">
+                <img src="image.png" alt="Product 2">
+                <h3>Artifact #2</h3>
+                <p>Price: $12,000</p>
+            </div>
+        </div>
+    </section>
 
-  <!-- Mystical Portal Transition (Appears Between Sections) -->
-  <div class="portal-transition hidden">
-    <img src="mystical-ancient-gateway-stockcake.jpg" alt="Mystical Portal" />
-  </div>
+    <footer>
+        <p>&copy; 2025 L’Occhio Oscuro. All rights reserved.</p>
+        <div id="social-links">
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+            <a href="#">Facebook</a>
+        </div>
+    </footer>
 
-  <!-- Featured Collection Section -->
-  <section class="featured-collection fade-in" id="shop">
-    <h2>Collection</h2>
-    <div class="product-carousel">
-      <div class="product card">
-        <img src="Screenshot 2025-02-17 224838.png" alt="Design 1" />
-        <h3>Shirt 1</h3>
-      </div>
-      <div class="product card">
-        <img src="design2.jpg" alt="Design 2" />
-        <h3>Jungle Relic Hoodie</h3>
-      </div>
-      <div class="product card">
-        <img src="design3.jpg" alt="Design 3" />
-        <h3>Veil of Shadows</h3>
-      </div>
-    </div>
-  </section>
+    <script>
+        document.getElementById('enter-btn').addEventListener('click', function() {
+            document.getElementById('torch-overlay').style.display = 'none';
+            document.querySelector('#hero').classList.add('fade-out');
+            setTimeout(() => document.getElementById('parallax').classList.add('fade-in'), 1000);
+        });
 
-  <!-- Rolling Boulder (Indiana Jones Style) -->
-  <div class="rolling-boulder">
-    <img src="mossy-stone-sphere-texture_53876-470076-removebg-preview.png" alt="Rolling Boulder" />
-  </div>
+        document.addEventListener('mousemove', function(event) {
+            const torch = document.getElementById('torch-overlay');
+            torch.style.top = event.clientY + 'px';
+            torch.style.left = event.clientX + 'px';
+        });
 
-  <!-- Newsletter Section -->
-  <section class="newsletter fade-in" id="contact">
-    <h2>Join</h2>
-    <p>Early access to exclusives.</p>
-    <form>
-      <input type="email" placeholder="Enter your email" required />
-      <button type="submit">Submit</button>
-    </form>
-  </section>
+        window.addEventListener('scroll', function() {
+            const boulder = document.getElementById('boulder');
+            boulder.style.transform = `translateY(${window.scrollY * 0.3}px) rotate(${window.scrollY}deg)`;
+        });
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 L'Occhio Oscuro. All rights reserved.</p>
-  </footer>
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'scale(1.05)';
+                card.style.boxShadow = '0 0 10px gold';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+                card.style.boxShadow = 'none';
+            });
+        });
 
-  <!-- Torch Overlay (Reveals Content in Light) -->
-  <div class="torch-overlay"></div>
+        document.querySelector('.portal-transition').addEventListener('click', function() {
+            const portal = document.createElement('div');
+            portal.classList.add('portal-effect');
+            document.body.appendChild(portal);
+            setTimeout(() => portal.remove(), 1000);
+        });
 
-  <!-- Torch Cursor (Attaches to Mouse Before Clicking) -->
-  <div class="torch-icon-cursor">
-    <img src="torch.png" alt="Torch Cursor" />
-  </div>
-
-  <!-- Torch on Wall (Appears After Click) -->
-  <div class="torch-on-wall hidden">
-    <img src="torch.png" alt="Wall Torch" />
-  </div>
-
-  <!-- External JS -->
-  <script src="script.js"></script>
+        document.getElementById('close-map').addEventListener('click', function() {
+            document.getElementById('map-overlay').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
