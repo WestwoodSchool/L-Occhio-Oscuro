@@ -1,57 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* 
-    Smooth parallax scrolling (optional).
-    If you want to keep your temple-layer fade-in or other scroll-based effects,
-    you can keep these. Otherwise, remove if not needed.
-  */
+  // Variables for smooth scrolling / parallax effects
   let currentScroll = 0;
   let targetScroll = window.scrollY;
   const easeFactor = 0.1;
+
+  // Elements used in the effects
   const templeLayer = document.querySelector(".temple-layer");
   const navbar = document.querySelector(".navbar");
+  const torchOverlay = document.querySelector(".torch-overlay");
 
-  // If you want to fade the temple layer as you scroll "deeper"
+  // Update target scroll and trigger fade-ins on scroll
   window.addEventListener("scroll", () => {
     targetScroll = window.scrollY;
 
-    // Trigger fade-in for elements as they approach the viewport
-    document.querySelectorAll(".fade-in").forEach((el) => {
-      if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
-        el.classList.add("visible");
+    // Fade in elements with the .fade-in class when near viewport
+    document.querySelectorAll(".fade-in").forEach((element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        element.classList.add("visible");
       }
     });
   });
 
+  // Smooth update loop for parallax and temple fade
   function smoothUpdate() {
     currentScroll += (targetScroll - currentScroll) * easeFactor;
     const maxScroll = document.body.scrollHeight - window.innerHeight;
 
-    // Parallax effect for elements with .parallax
+    // Apply parallax effect on elements with the .parallax class
     document.querySelectorAll(".parallax").forEach((layer) => {
       const depth = parseFloat(layer.getAttribute("data-depth")) || 0.5;
       const movement = currentScroll * depth;
       layer.style.transform = `translateY(${movement}px)`;
     });
 
-    // Fade in the temple layer
+    // Update temple layer opacity based on scroll depth
     if (templeLayer) {
-      const templeOpacity = Math.min(
-        (currentScroll / maxScroll) *
-          parseFloat(
-            getComputedStyle(document.documentElement).getPropertyValue(
-              "--temple-max-opacity"
-            )
-          ),
-        parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--temple-max-opacity"
-          )
-        )
-      );
-      templeLayer.style.opacity = templeOpacity;
+      const templeMaxOpacity = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue("--temple-max-opacity")
+      ) || 0.7;
+      // Calculate opacity based on scroll percentage
+      const newOpacity = Math.min((currentScroll / maxScroll) * templeMaxOpacity, templeMaxOpacity);
+      templeLayer.style.opacity = newOpacity;
     }
 
-    // Navbar style update based on scroll threshold
+    // Update navbar style based on scroll threshold
     if (currentScroll > 50) {
       navbar.classList.add("scrolled");
     } else {
@@ -62,14 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   smoothUpdate();
 
-  /* --------------------------------------
-     Torch effect that covers entire site
-  --------------------------------------- */
-  const torchOverlay = document.querySelector(".torch-overlay");
-
-  // On mouse move anywhere in the viewport, update the gradient center
+  // Torchlight Effect: update the CSS variables for the torch center based on mouse position
   window.addEventListener("mousemove", (e) => {
-    torchOverlay.style.setProperty("--torch-x", `${e.pageX}px`);
-    torchOverlay.style.setProperty("--torch-y", `${e.pageY}px`);
+    if (torchOverlay) {
+      // Use pageX and pageY so the torch follows the cursor across the entire document
+      torchOverlay.style.setProperty("--torch-x", `${e.pageX}px`);
+      torchOverlay.style.setProperty("--torch-y", `${e.pageY}px`);
+    }
   });
 });
