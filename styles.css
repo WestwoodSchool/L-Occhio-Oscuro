@@ -16,8 +16,8 @@ html {
   --jungle-green: #3a5f0b;
   --dark-bg: #0a0a0a;
   --light-bg: #111;
-  --overlay-max-opacity: 0.3; /* For darkening overlay */
-  --temple-max-opacity: 0.7;  /* Maximum temple layer opacity */
+  --overlay-max-opacity: 0.3; /* Overall dark overlay opacity */
+  --temple-max-opacity: 0.7;  /* Maximum opacity for temple layer */
   --transition-duration: 0.4s;
 }
 
@@ -146,7 +146,7 @@ body {
   overflow: hidden;
 }
 
-/* The hero background now uses your chosen image */
+/* Use your specified hero image */
 .hero-bg {
   position: absolute;
   top: 0;
@@ -223,6 +223,7 @@ body {
 .featured-collection {
   padding: 100px 50px;
   text-align: center;
+  position: relative; /* For torch overlay positioning */
 }
 
 .featured-collection h2 {
@@ -275,6 +276,29 @@ body {
 
 .card:hover h3 {
   text-shadow: 0 0 8px var(--gold-color);
+}
+
+/*---------------------------------------------
+  Torch Overlay for Collection Section
+---------------------------------------------*/
+.torch-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 200px at var(--torch-x, 50%) var(--torch-y, 50%),
+    transparent 0%,
+    rgba(0, 0, 0, 0.95) 80%
+  );
+  transition: background 0.3s ease, opacity 0.3s ease;
+  z-index: 2;
+}
+
+.torch-overlay.full-dark {
+  background: rgba(0, 0, 0, 0.95);
 }
 
 /*---------------------------------------------
