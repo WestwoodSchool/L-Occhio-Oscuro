@@ -67,7 +67,7 @@ nav a:hover {
     height: 100vh;
     text-align: center;
     position: relative;
-    background: url('background-image.jpg') center/cover no-repeat;
+    background: url('mystical-ancient-gateway-stockcake.jpg') center/cover no-repeat;
 }
 
 .hero::before {
@@ -86,6 +86,8 @@ nav a:hover {
     letter-spacing: 2px;
     margin-bottom: 10px;
     position: relative;
+    color: #d4af37;
+    text-shadow: 0px 0px 30px rgba(212, 175, 55, 0.6);
 }
 
 .sub-title {
