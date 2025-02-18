@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>L'Occhio Oscuro</title>
+  <!-- Link to your external CSS -->
   <link rel="stylesheet" href="styles.css" />
+  <!-- Playfair Display Font -->
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"
     rel="stylesheet"
@@ -29,7 +31,7 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Section with Centered Background & Title -->
   <section class="hero parallax" data-depth="0.2">
     <div class="hero-bg"></div>
     <div class="hero-overlay fade-in">
@@ -41,7 +43,9 @@
   <!-- About Section -->
   <section class="about fade-in" id="about">
     <h2>About</h2>
-    <p>Where elegance meets mystery. A collection crafted for those who seek the unseen.</p>
+    <p>
+      Where elegance meets mystery. A collection crafted for those who seek the unseen.
+    </p>
   </section>
 
   <!-- Featured Collection -->
@@ -78,9 +82,19 @@
     <p>&copy; 2025 L'Occhio Oscuro. All rights reserved.</p>
   </footer>
 
-  <!-- Torch overlay that covers the entire site, revealing content only in a circle around the cursor -->
+  <!-- Torch Overlay (initially revealing content only within the torch's radius) -->
   <div class="torch-overlay"></div>
 
+  <!-- Torch Icon Cursor (while user is "holding" the torch) -->
+  <div class="torch-icon-cursor"></div>
+
+  <!-- Torch on the Wall (appears after user clicks to reveal site) -->
+  <div class="torch-on-wall hidden"></div>
+
+  <!-- Indiana Jones–style rolling boulder that moves with scroll -->
+  <div class="rolling-boulder"></div>
+
+  <!-- Main JS File -->
   <script src="script.js"></script>
 </body>
 </html>
