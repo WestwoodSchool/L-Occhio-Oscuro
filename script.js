@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let targetScroll = window.scrollY;
   const easeFactor = 0.1;
 
-  // Elements used in the effects
+  // Elements for parallax and temple fade effects
   const templeLayer = document.querySelector(".temple-layer");
   const navbar = document.querySelector(".navbar");
   const torchOverlay = document.querySelector(".torch-overlay");
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Smooth update loop for parallax and temple fade
+  // Smooth update loop for parallax and temple fade effects
   function smoothUpdate() {
     currentScroll += (targetScroll - currentScroll) * easeFactor;
     const maxScroll = document.body.scrollHeight - window.innerHeight;
@@ -34,17 +34,16 @@ document.addEventListener("DOMContentLoaded", () => {
       layer.style.transform = `translateY(${movement}px)`;
     });
 
-    // Update temple layer opacity based on scroll depth
+    // Fade in temple layer based on scroll depth
     if (templeLayer) {
       const templeMaxOpacity = parseFloat(
         getComputedStyle(document.documentElement).getPropertyValue("--temple-max-opacity")
       ) || 0.7;
-      // Calculate opacity based on scroll percentage
       const newOpacity = Math.min((currentScroll / maxScroll) * templeMaxOpacity, templeMaxOpacity);
       templeLayer.style.opacity = newOpacity;
     }
 
-    // Update navbar style based on scroll threshold
+    // Update navbar style based on scroll
     if (currentScroll > 50) {
       navbar.classList.add("scrolled");
     } else {
@@ -55,12 +54,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   smoothUpdate();
 
-  // Torchlight Effect: update the CSS variables for the torch center based on mouse position
+  // Torchlight Effect: Update the torch center based on mouse movement
   window.addEventListener("mousemove", (e) => {
+    // Only update if the torch overlay exists (i.e. hasn't been disabled)
     if (torchOverlay) {
-      // Use pageX and pageY so the torch follows the cursor across the entire document
       torchOverlay.style.setProperty("--torch-x", `${e.pageX}px`);
       torchOverlay.style.setProperty("--torch-y", `${e.pageY}px`);
+    }
+  });
+
+  // On any click, disable the torch effect and reveal the entire site.
+  document.addEventListener("click", () => {
+    if (torchOverlay) {
+      // Remove the torch overlay from the DOM so the site remains fully visible.
+      torchOverlay.remove();
     }
   });
 });
