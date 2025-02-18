@@ -15,12 +15,10 @@ html {
   --gold-color: #d4af37;
   --dark-bg: #0a0a0a;
   --light-bg: #111;
-  --temple-max-opacity: 0.7; /* How strongly the temple layer shows */
+  --temple-max-opacity: 0.7;
   --transition-duration: 0.4s;
-
-  /* Torch effect settings */
-  --torch-radius: 500px;   /* The size of the light circle */
-  --torch-fade: 60%;       /* Where the light starts to fade to black */
+  --torch-radius: 500px;
+  --torch-fade: 60%;
 }
 
 /*---------------------------------------------
@@ -37,7 +35,6 @@ body {
 /*---------------------------------------------
   Background Layers
 ---------------------------------------------*/
-/* Jungle Layer (static lush background) */
 .jungle-bg {
   position: fixed;
   top: 0;
@@ -48,7 +45,6 @@ body {
   z-index: -3;
 }
 
-/* Temple Layer (fades in on scroll) */
 .temple-layer {
   position: fixed;
   top: 0;
@@ -81,51 +77,8 @@ body {
   background: rgba(0, 0, 0, 0.9);
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-}
-
-.nav-logo {
-  max-height: 50px;
-  width: auto;
-}
-
-.navbar ul {
-  list-style: none;
-  display: flex;
-  gap: 30px;
-}
-
-.navbar a {
-  text-decoration: none;
-  color: #e0e0e0;
-  font-size: 18px;
-  position: relative;
-  transition: color 0.3s;
-}
-
-.navbar a:hover {
-  color: var(--gold-color);
-}
-
-.navbar a::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  background: var(--gold-color);
-  left: 0;
-  bottom: -5px;
-  transition: width 0.3s ease;
-}
-
-.navbar a:hover::after {
-  width: 100%;
-}
-
 /*---------------------------------------------
-  Hero Section with Centered Background & Title
+  Hero Section
 ---------------------------------------------*/
 .hero {
   position: relative;
@@ -134,7 +87,6 @@ body {
   overflow: hidden;
 }
 
-/* Your specified hero image */
 .hero-bg {
   position: absolute;
   top: 0;
@@ -146,13 +98,10 @@ body {
   z-index: 1;
 }
 
-/* Center the hero overlay perfectly */
 .hero-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100%;
-  max-width: 1200px;
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 10;
@@ -164,7 +113,6 @@ body {
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 3px;
-  margin-bottom: 20px;
   opacity: 0;
   animation: fadeInUp 1s forwards;
 }
@@ -187,180 +135,59 @@ body {
 }
 
 /*---------------------------------------------
-  About Section
+  Hidden Map Overlay
 ---------------------------------------------*/
-.about {
-  padding: 100px 50px;
-  text-align: center;
-  background: var(--light-bg);
-}
-
-.about h2 {
-  font-size: 42px;
-  color: var(--gold-color);
-  margin-bottom: 20px;
-}
-
-.about p {
-  font-size: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-/*---------------------------------------------
-  Featured Collection & Product Cards
----------------------------------------------*/
-.featured-collection {
-  padding: 100px 50px;
-  text-align: center;
-  position: relative;
-}
-
-.featured-collection h2 {
-  font-size: 42px;
-  color: var(--gold-color);
-  margin-bottom: 40px;
-}
-
-.product-carousel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-}
-
-.card {
-  width: 220px;
-  background: var(--dark-bg);
+.hidden-map {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px;
   border: 2px solid var(--gold-color);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  padding: 10px;
-}
-
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-}
-
-.card img {
-  width: 100%;
-  height: auto;
   border-radius: 10px;
-  transition: transform 0.3s ease;
-}
-
-.card img:hover {
-  transform: scale(1.1);
-}
-
-.card h3 {
-  margin-top: 10px;
-  font-size: 20px;
-  color: var(--gold-color);
-  transition: text-shadow 0.3s ease;
-}
-
-.card:hover h3 {
-  text-shadow: 0 0 8px var(--gold-color);
-}
-
-/*---------------------------------------------
-  Newsletter Section
----------------------------------------------*/
-.newsletter {
-  padding: 80px 50px;
+  z-index: 9999;
   text-align: center;
-  background: var(--light-bg);
+  display: none;
 }
 
-.newsletter h2 {
-  font-size: 36px;
-  color: var(--gold-color);
-  margin-bottom: 20px;
-}
-
-.newsletter p {
-  font-size: 18px;
-  margin-bottom: 30px;
-}
-
-.newsletter form {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.newsletter input {
-  padding: 15px;
-  width: 300px;
-  font-size: 16px;
-  border: none;
-  outline: none;
+.hidden-map img {
+  width: 100%;
   border-radius: 5px;
 }
 
-.newsletter button {
-  padding: 15px 30px;
+.hidden-map .close-map {
   background: var(--gold-color);
   color: var(--dark-bg);
-  font-size: 16px;
   border: none;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: background 0.3s, transform 0.3s;
-  border-radius: 8px;
-}
-
-.newsletter button:hover {
-  background: #b89732;
-  transform: translateY(-3px);
+  margin-bottom: 10px;
 }
 
 /*---------------------------------------------
-  Footer
+  Rolling Boulder
 ---------------------------------------------*/
-footer {
-  text-align: center;
-  padding: 30px;
-  background: var(--dark-bg);
-  color: #777;
+.rolling-boulder {
+  position: fixed;
+  right: 20px;
+  bottom: 50px;
+  width: 100px;
+  height: 100px;
+  z-index: 5000;
+  transition: transform 0.2s ease;
+}
+
+.rolling-boulder img {
+  width: 100%;
+  height: auto;
+  animation: roll infinite linear;
 }
 
 /*---------------------------------------------
-  Fade-In Animation for Scroll-Triggered Elements
----------------------------------------------*/
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease-out, transform 1s ease-out;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/*---------------------------------------------
-  Keyframes
----------------------------------------------*/
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/*---------------------------------------------
-  Torch Overlay – Entire Site is Dark Except Inside Torch Radius
+  Torchlight & Torch on Wall
 ---------------------------------------------*/
 .torch-overlay {
   position: fixed;
@@ -379,41 +206,24 @@ footer {
   transition: background 0.1s ease;
 }
 
-/*---------------------------------------------
-  Torch Icon Cursor
-  - Follows the user's mouse (via JS)
-  - Replaces default cursor
----------------------------------------------*/
-body {
-  cursor: none; /* Hide default cursor */
-}
-
 .torch-icon-cursor {
   position: fixed;
   top: 0;
   left: 0;
   width: 50px;
   height: 50px;
-  background: url('torch-icon.png') center center/contain no-repeat;
   pointer-events: none;
   z-index: 10000;
   transform: translate(-50%, -50%);
-  opacity: 1;
   transition: opacity 0.2s ease;
 }
 
-/*---------------------------------------------
-  Torch on Wall
-  - Hidden initially (class .hidden)
-  - Appears on the left side after user clicks
----------------------------------------------*/
 .torch-on-wall {
   position: fixed;
   left: 30px;
   bottom: 100px;
   width: 80px;
   height: 200px;
-  background: url('torch-on-wall.png') center center/contain no-repeat;
   z-index: 11000;
   transition: opacity 0.5s ease, transform 0.5s ease;
   opacity: 1;
@@ -425,55 +235,72 @@ body {
 }
 
 /*---------------------------------------------
-  Rolling Boulder
-  - Positioned on the right side
-  - Will animate with scroll via JS or parallax
+  Portal Transition Effect
 ---------------------------------------------*/
-.rolling-boulder {
+.portal-transition {
   position: fixed;
-  right: 20px;
-  bottom: 50px;
-  width: 100px;
-  height: 100px;
-  background: url('boulder.png') center center/contain no-repeat;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
   z-index: 5000;
-  /* We'll rely on JS to transform or animate it with scroll */
-  transition: transform 0.2s ease;
+  display: none;
+}
+
+.portal-transition img {
+  width: 100%;
+  animation: swirl 2s infinite linear;
+}
+
+/*---------------------------------------------
+  Keyframe Animations
+---------------------------------------------*/
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes swirl {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.1);
+  }
 }
 
 /*---------------------------------------------
   Responsive Adjustments
 ---------------------------------------------*/
 @media (max-width: 768px) {
-  .navbar {
-    padding: 15px 20px;
+  .rolling-boulder {
+    width: 70px;
+    height: 70px;
   }
-  .hero h1 {
-    font-size: 40px;
-  }
-  .cta-button {
-    padding: 10px 30px;
-    font-size: 14px;
-  }
-  .about,
-  .featured-collection,
-  .newsletter {
-    padding: 60px 20px;
-  }
-  .card {
-    width: 180px;
-  }
-  .newsletter input {
-    width: 250px;
-  }
+
   .torch-icon-cursor {
     width: 40px;
     height: 40px;
   }
-  .rolling-boulder {
-    width: 70px;
-    height: 70px;
-    right: 10px;
-    bottom: 30px;
+
+  .portal-transition {
+    width: 200px;
+    height: 200px;
   }
 }
