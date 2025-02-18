@@ -26,7 +26,7 @@ body {
     align-items: center;
 }
 .nav-logo {
-    max-height: 80px; /* Adjust height to fit navbar */
+    max-height: 50px; /* Adjust height to fit navbar */
     width: auto; /* Maintain aspect ratio */
     display: block; /* Prevent extra spacing */
 }
