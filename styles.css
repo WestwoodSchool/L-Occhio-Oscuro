@@ -9,32 +9,36 @@
 }
 
 :root {
-  --primary-bg: #0a0a0a;           /* Deep black background */
-  --secondary-color: #ffffff;      /* White text */
-  --accent-color: #d4af37;         /* Gold accent */
+  --primary-bg: #0a0a0a;          /* Deep, dark background */
+  --secondary-color: #ffffff;     /* White text */
+  --accent-color: #d4af37;        /* Luxurious gold accent */
+  --jungle-green: #3a5f0b;        /* Deep jungle green for subtle accents */
   --overlay-opacity: 0.3;
   --fog-opacity: 0.15;
   --transition-duration: 0.3s;
   --hero-title-size: 4em;
   --hero-subtitle-size: 1.5em;
-  --modal-bg: rgba(0, 0, 0, 0.85);
-  --shadow-light: rgba(212, 175, 55, 0.8);
-  --shadow-soft: rgba(212, 175, 55, 0.4);
-  --perspective-depth: 1000px;
+  --max-width: 1200px;
+  --input-bg: rgba(255, 255, 255, 0.1);
+  --input-focus-bg: rgba(255, 255, 255, 0.15);
+  --input-border: 1px solid rgba(255, 255, 255, 0.2);
+  --input-focus-border: 1px solid var(--accent-color);
 }
 
-/* Base Body Styles */
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
 body {
   background-color: var(--primary-bg);
   color: var(--secondary-color);
   overflow-x: hidden;
-  position: relative;
   line-height: 1.6;
-  perspective: var(--perspective-depth);
+  position: relative;
+  font-size: 16px;
 }
 
 /* ==========================================================================
-   OVERLAYS & FOG EFFECT
+   BACKGROUND OVERLAYS & FOG EFFECT
    ========================================================================== */
 .overlay {
   position: fixed;
@@ -65,7 +69,7 @@ body {
 }
 
 /* ==========================================================================
-   NAVIGATION BAR (Fixed)
+   NAVIGATION BAR (FIXED)
    ========================================================================== */
 .navbar {
   display: flex;
@@ -156,16 +160,16 @@ nav a:hover::after {
   margin-bottom: 10px;
   position: relative;
   color: var(--accent-color);
-  text-shadow: 0px 0px 30px var(--shadow-light);
+  text-shadow: 0px 0px 30px rgba(212, 175, 55, 0.6);
   z-index: 2;
   transform: translateZ(30px);
   animation: spotlightShimmer 3s infinite ease-in-out;
 }
 
 @keyframes spotlightShimmer {
-  0% { text-shadow: 0px 0px 20px var(--shadow-soft); }
-  50% { text-shadow: 0px 0px 40px var(--shadow-light); }
-  100% { text-shadow: 0px 0px 20px var(--shadow-soft); }
+  0% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
+  50% { text-shadow: 0px 0px 40px rgba(212, 175, 55, 0.8); }
+  100% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
 }
 
 .sub-title {
@@ -177,7 +181,7 @@ nav a:hover::after {
   transform: translateZ(20px);
 }
 
-/* Vignette Effect on Hero Bottom */
+/* Vignette Effect */
 .hero::after {
   content: '';
   position: absolute;
@@ -185,7 +189,7 @@ nav a:hover::after {
   left: 0;
   width: 100%;
   height: 100px;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
   z-index: 2;
 }
 
@@ -198,8 +202,11 @@ nav a:hover::after {
   opacity: 0;
   transform: translateY(50px);
   transition: opacity 1s ease-out, transform 1s ease-out;
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
+/* Product Grid for Collection */
 .product-grid {
   display: flex;
   gap: 20px;
@@ -242,12 +249,25 @@ nav a:hover::after {
 }
 
 /* ==========================================================================
-   CONTACT FORM (Professional Style)
+   CONTACT SECTION & FORM (PROFESSIONAL STYLE)
    ========================================================================== */
 .contact-container {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
+}
+
+#contact {
+  padding: 100px 20px;
+}
+
+#contact h2 {
+  margin-bottom: 20px;
+}
+
+#contact p {
+  margin-bottom: 30px;
+  font-size: 1.1em;
 }
 
 form {
@@ -256,6 +276,9 @@ form {
   align-items: center;
   gap: 15px;
   margin-top: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .form-group {
@@ -269,7 +292,7 @@ form textarea {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
   font-size: 1em;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--input-bg);
   color: var(--secondary-color);
   transition: border 0.3s, background 0.3s;
 }
@@ -278,7 +301,7 @@ form input:focus,
 form textarea:focus {
   outline: none;
   border-color: var(--accent-color);
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--input-focus-bg);
 }
 
 form button {
@@ -309,7 +332,7 @@ footer {
 }
 
 /* ==========================================================================
-   MODAL (Interactive Product Details)
+   MODAL (PRODUCT INTERACTIVE DETAILS)
    ========================================================================== */
 .modal {
   position: fixed;
@@ -317,7 +340,7 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--modal-bg);
+  background: rgba(0,0,0,0.85);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -370,7 +393,7 @@ footer {
 /* ==========================================================================
    ANIMATIONS & INTERACTIVITY
    ========================================================================== */
-/* Fade-In Animation for Content Sections (used with IntersectionObserver in JS) */
+/* Fade-In Animation for Content Sections (triggered via IntersectionObserver in JS) */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -416,11 +439,11 @@ footer {
 /* ==========================================================================
    EXTRA LUXURY STYLING & FINISHES
    ========================================================================== */
-/* Vignette Effect on Hero for Additional Depth */
+/* Vignette Effect on Hero Section */
 .hero::after {
-  content: '';\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    width: 100%;\n    height: 100px;\n    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);\n    z-index: 2;\n}
+  content: '';\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 100px;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);\n  z-index: 2;\n}
 
-/* Subtle glow for interactive elements */
+/* Additional glow for interactive elements */
 nav a:hover,
 .cta-button:hover {
   text-shadow: 0px 0px 10px var(--shadow-light);
