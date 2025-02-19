@@ -1,5 +1,5 @@
 /* ==========================================================================
-   GLOBAL RESET & VARIABLES
+   GLOBAL RESET & BASE SETUP
    ========================================================================== */
 * {
   margin: 0;
@@ -9,72 +9,57 @@
 }
 
 :root {
-  --primary-bg: #0a0a0a;
-  --secondary-color: #ffffff;
-  --accent-color: #d4af37;
+  --primary-bg: #0a0a0a;          /* Deep black background */
+  --secondary-color: #ffffff;     /* White text */
+  --accent-color: #d4af37;        /* Gold accent for luxury */
   --overlay-opacity: 0.3;
   --fog-opacity: 0.15;
   --transition-duration: 0.3s;
+  --hero-title-size: 4em;
+  --hero-subtitle-size: 1.5em;
 }
 
-/* Base styles */
+/* Base Body Styles */
 body {
   background-color: var(--primary-bg);
   color: var(--secondary-color);
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
+  line-height: 1.6;
 }
 
 /* ==========================================================================
-   SPLASH SCREEN (MAGIC DOOR)
+   BACKGROUND OVERLAYS & FOG EFFECT
    ========================================================================== */
-#splash {
+
+/* Dark radial overlay for depth */
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('mystical-ancient-gateway-stockcake.jpg') center/cover no-repeat;
-  z-index: 3000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* No scrolling during splash */
-  overflow: hidden;
+  background: radial-gradient(circle, rgba(0,0,0,var(--overlay-opacity)) 0%, rgba(0,0,0,1) 100%);
+  z-index: -2;
 }
 
-/* Invisible Button covering center half of the screen */
-.splash-button {
-  position: absolute;
-  top: 25%;       /* From 25% to 75% vertically */
-  left: 25%;      /* From 25% to 75% horizontally */
-  width: 50%;
-  height: 50%;
-  cursor: pointer;
-  background: transparent;
+/* Fog Layer: animated fog to add mystery */
+.fog-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: url('fog-overlay.png') repeat;
+  opacity: var(--fog-opacity);
+  z-index: 1;
+  animation: fogMove 30s linear infinite;
 }
 
-/* Zoom In Animation for Splash */
-@keyframes zoomIn {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(20);
-    opacity: 0;
-  }
-}
-#splash.zoom {
-  animation: zoomIn 1.5s forwards;
-}
-
-/* ==========================================================================
-   MAIN CONTENT (HIDDEN INITIALY)
-   ========================================================================== */
-#main-content {
-  display: none;
-  overflow-y: auto;
+@keyframes fogMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 1000px; }
 }
 
 /* ==========================================================================
@@ -95,6 +80,7 @@ body {
 
 .logo img {
   height: 50px;
+  transition: transform 0.3s;
 }
 
 nav ul {
@@ -126,11 +112,12 @@ nav a:hover {
   justify-content: center;
   align-items: center;
   text-align: center;
+  background: url('mystical-ancient-gateway-stockcake.jpg') center/cover no-repeat;
   overflow: hidden;
   z-index: 0;
 }
 
-/* Dark overlay on hero to enhance contrast */
+/* Dark overlay for enhanced contrast */
 .hero::before {
   content: '';
   position: absolute;
@@ -142,9 +129,9 @@ nav a:hover {
   z-index: 1;
 }
 
-/* Hero title with golden spotlight */
+/* Golden spotlight on hero title */
 .main-title {
-  font-size: 4em;
+  font-size: var(--hero-title-size);
   font-weight: 700;
   letter-spacing: 2px;
   margin-bottom: 10px;
@@ -152,11 +139,17 @@ nav a:hover {
   color: var(--accent-color);
   text-shadow: 0px 0px 30px rgba(212, 175, 55, 0.6);
   z-index: 2;
+  animation: spotlightShimmer 3s infinite ease-in-out;
 }
 
-/* No enter button; the door is the only interactive element */
+@keyframes spotlightShimmer {
+  0% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
+  50% { text-shadow: 0px 0px 40px rgba(212, 175, 55, 0.8); }
+  100% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
+}
+
 .sub-title {
-  font-size: 1.5em;
+  font-size: var(--hero-subtitle-size);
   opacity: 0.8;
   margin-bottom: 20px;
   position: relative;
@@ -169,8 +162,8 @@ nav a:hover {
 .content-section {
   padding: 100px 20px;
   text-align: center;
-  opacity: 0;
-  transform: translateY(50px);
+  opacity: 0; /* Initially hidden for fade-in animation */
+  transform: translateY(50px); /* Start offset for animation */
   transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
@@ -219,8 +212,7 @@ form {
   margin: 40px auto 0 auto;
 }
 
-form input,
-form textarea {
+form input, form textarea {
   width: 100%;
   padding: 10px;
   border: none;
@@ -256,9 +248,9 @@ footer {
 }
 
 /* ==========================================================================
-   ANIMATION & INTERACTIVITY
+   ANIMATIONS & INTERACTIVITY
    ========================================================================== */
-/* Fade-In Animation for content sections (to be triggered via IntersectionObserver in JS) */
+/* Keyframe for general fade in effect (for content sections, etc.) */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -277,40 +269,55 @@ footer {
   .main-title {
     font-size: 3em;
   }
+  
   .sub-title {
     font-size: 1.2em;
   }
+  
   .cta-button {
     padding: 12px 30px;
     font-size: 0.9em;
   }
+  
   .product-item img {
     width: 200px;
   }
+  
   nav ul {
     gap: 10px;
   }
+  
   nav a {
     font-size: 0.9em;
   }
 }
 
 /* ==========================================================================
-   EXTRA LUXURY STYLING
+   EXTRA LUXURY STYLING & FINISHES
    ========================================================================== */
+/* Vignette effect on hero section for extra depth */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  z-index: 2;
+}
+
 /* Subtle glow on interactive elements */
 nav a:hover,
 .cta-button:hover {
   text-shadow: 0px 0px 10px rgba(212, 175, 55, 0.6);
 }
 
-/* Vignette effect on hero for extra depth */
-.hero::after {
-  content: '';\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    width: 100%;\n    height: 100px;\n    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);\n    z-index: 2;\n}
-
-/* Extra padding on larger screens for spacious layout */
+/* Additional spacing on larger screens for a luxurious layout */
 @media (min-width: 1024px) {
   .content-section {
     padding: 150px 40px;
   }
 }
+
+/* End of CSS */
