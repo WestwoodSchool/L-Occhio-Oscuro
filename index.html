@@ -2,30 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>L'Occhio Oscuro – Welcome</title>
-  <!-- Minimal CSS just for splash (or reference your styles.css if integrated) -->
-  <link rel="stylesheet" href="splash.css" />
-  <!-- The splash.js handles the zoom transition and navigation -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Occhio Oscuro - Welcome</title>
+  <link rel="stylesheet" href="styles.css">
   <script defer src="splash.js"></script>
-  <!-- Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Splash Screen (Magic Door) -->
+  <!-- Splash Screen: Magic Door with Spline Design -->
   <div id="splash">
-    <!-- Embedded Spline design (the magic door) -->
-    <iframe
-      src="https://my.spline.design/tvatimedoor-1778185c64b777856bbb63c6cd2669b0/"
-      frameborder="0"
-      width="100%"
-      height="100%"
-    ></iframe>
-    <!-- Invisible Button (center portion) -->
+    <!-- Embedded Spline design acting as the magic door -->
+    <iframe src="https://my.spline.design/tvatimedoor-1778185c64b777856bbb63c6cd2669b0/" frameborder="0" width="100%" height="100%"></iframe>
+    <!-- Invisible button covering the center half of the screen -->
     <div class="splash-button"></div>
   </div>
+
+  <!-- Navbar (Optional, minimal on splash) -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="your-logo.png" alt="L'Occhio Oscuro Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+      </ul>
+    </nav>
+  </header>
 </body>
 </html>
