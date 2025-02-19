@@ -69,11 +69,22 @@ document.addEventListener("mousemove", function(e) {
 // Fog Effect
 const fogLayer = document.createElement("div");
 fogLayer.classList.add("fog-layer");
+fogLayer.style.position = "fixed";
+fogLayer.style.top = "0";
+fogLayer.style.left = "0";
+fogLayer.style.width = "100%";
+fogLayer.style.height = "100%";
+fogLayer.style.pointerEvents = "none";
+fogLayer.style.background = "url('fog-overlay.png') repeat";
+fogLayer.style.opacity = "0.2";
+fogLayer.style.zIndex = "1";
 document.body.appendChild(fogLayer);
 
-document.addEventListener("mousemove", function(e) {
-    const fog = document.querySelector(".fog-layer");
-    const x = e.clientX - fog.offsetWidth / 2;
-    const y = e.clientY - fog.offsetHeight / 2;
-    fog.style.transform = `translate(${x}px, ${y}px)`;
-});
+// Animate Fog Movement
+let fogX = 0;
+let fogY = 0;
+setInterval(() => {
+    fogX += 0.2;
+    fogY += 0.1;
+    fogLayer.style.backgroundPosition = `${fogX}px ${fogY}px`;
+}, 50);
