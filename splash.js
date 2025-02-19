@@ -1,14 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   const splashButton = document.querySelector('.splash-button');
 
-  // On click, trigger the zoom animation and navigate to main.html
-  splashButton.addEventListener('click', function() {
-    // Add class to start zoom animation (defined in CSS)
+  // On click, add .zoom class to #splash to start animation
+  // After 1.5s, navigate to main.html
+  splashButton.addEventListener('click', () => {
     splash.classList.add('zoom');
-    // After animation (1.5s), navigate to the main site
-    setTimeout(function() {
-      window.location.href = 'main.html';
+    setTimeout(() => {
+      window.location.href = 'main.html'; // <-- redirect to your main site
     }, 1500);
   });
 });
