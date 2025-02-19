@@ -1,4 +1,6 @@
-/* Basic reset and full viewport coverage */
+/* ==========================================================================
+   GLOBAL RESET & BASE SETUP
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -6,59 +8,424 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden; /* No scrolling on splash */
-  background: #000; /* Fallback background if needed */
+:root {
+  --primary-bg: #0a0a0a;         /* Deep, dark background */
+  --secondary-color: #ffffff;    /* Clean white text */
+  --accent-color: #d4af37;       /* Luxurious gold accent */
+  --jungle-green: #3a5f0b;       /* Subtle deep jungle green */
+  --overlay-opacity: 0.3;
+  --fog-opacity: 0.15;
+  --transition-duration: 0.3s;
+  --hero-title-size: 4em;
+  --hero-subtitle-size: 1.5em;
+  --max-width: 1200px;
 }
 
-/* Splash container occupies the entire screen */
-#splash {
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+body {
+  background-color: var(--primary-bg);
+  color: var(--secondary-color);
+  overflow-x: hidden;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* ==========================================================================
+   BACKGROUND OVERLAYS & FOG EFFECT
+   ========================================================================== */
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 9999; /* Ensure it's on top of everything else */
-  overflow: hidden;
+  background: radial-gradient(circle, rgba(0,0,0,var(--overlay-opacity)) 0%, rgba(0,0,0,1) 100%);
+  z-index: -2;
 }
 
-/* The Spline design (iframe) covers the entire splash area */
-#splash iframe {
+.fog-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: url('fog-overlay.png') repeat;
+  opacity: var(--fog-opacity);
+  z-index: 1;
+  animation: fogMove 30s linear infinite;
+}
+
+@keyframes fogMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 1000px; }
+}
+
+/* ==========================================================================
+   NAVIGATION BAR (FIXED)
+   ========================================================================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.8);
+  transition: background var(--transition-duration);
+}
+
+.logo img {
+  height: 50px;
+  transition: transform 0.3s;
+}
+
+.logo img:hover {
+  transform: scale(1.1) rotateY(10deg);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-weight: 700;
+  transition: color var(--transition-duration);
+  position: relative;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s;
+}
+
+nav a:hover {
+  color: var(--accent-color);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: url('mystical-ancient-gateway-stockcake.jpg') center/cover no-repeat;
+  overflow: hidden;
+  z-index: 0;
+  transform-style: preserve-3d;
+}
+
+.hero-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
 }
 
-/* Invisible button in the central 50% portion of the screen */
-.splash-button {
+.main-title {
+  font-size: var(--hero-title-size);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  position: relative;
+  color: var(--accent-color);
+  text-shadow: 0px 0px 30px rgba(212, 175, 55, 0.6);
+  z-index: 2;
+  transform: translateZ(30px);
+  animation: spotlightShimmer 3s infinite ease-in-out;
+}
+
+@keyframes spotlightShimmer {
+  0% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
+  50% { text-shadow: 0px 0px 40px rgba(212, 175, 55, 0.8); }
+  100% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
+}
+
+.sub-title {
+  font-size: var(--hero-subtitle-size);
+  opacity: 0.8;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+  transform: translateZ(20px);
+}
+
+/* Vignette Effect for Enhanced Atmosphere */
+.hero::after {
+  content: '';
   position: absolute;
-  top: 25%;  /* from 25% to 75% vertically */
-  left: 25%; /* from 25% to 75% horizontally */
-  width: 50%;
-  height: 50%;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  z-index: 2;
+}
+
+/* ==========================================================================
+   CONTENT SECTIONS
+   ========================================================================== */
+.content-section {
+  padding: 100px 20px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.product-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  transform: perspective(1000px) rotateX(0deg);
+  transition: transform 0.6s ease-out;
+}
+
+.product-grid:hover {
+  transform: perspective(1000px) rotateX(3deg);
+}
+
+.product-item {
+  background: #212121;
+  padding: 10px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: scale(1.05) translateZ(20px);
+  box-shadow: 0px 5px 15px rgba(212, 175, 55, 0.4);
+}
+
+.product-item img {
+  width: 250px;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: auto;
+  transition: transform 0.3s ease;
+}
+
+.product-item p {
+  margin-top: 10px;
+  font-size: 1.1em;
+  color: var(--accent-color);
+}
+
+/* ==========================================================================
+   CONTACT SECTION & FORM (PROFESSIONAL STYLE)
+   ========================================================================== */
+.contact-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.form-group {
+  width: 100%;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--secondary-color);
+  transition: border 0.3s, background 0.3s;
+}
+
+form input:focus, form textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+form button {
+  padding: 12px 25px;
+  background: var(--accent-color);
+  color: var(--primary-bg);
+  border: none;
+  font-size: 1em;
   cursor: pointer;
-  background: transparent;
-  z-index: 2; /* Above the iframe */
+  transition: background 0.3s, transform 0.3s;
+  border-radius: 5px;
 }
 
-/* Zoom animation to simulate flying into the door */
-@keyframes zoomIn {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(20);
+form button:hover {
+  background: #b89732;
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: var(--primary-bg);
+  color: #777;
+  font-size: 0.9em;
+}
+
+/* ==========================================================================
+   MODAL (PRODUCT INTERACTIVE DETAILS)
+   ========================================================================== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modal-close {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  font-size: 2em;
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.modal-close:hover {
+  color: var(--accent-color);
+}
+
+#modal-img {
+  max-width: 400px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transform: translateZ(30px);
+}
+
+#modal-title {
+  color: var(--accent-color);
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  transform: translateZ(20px);
+}
+
+#modal-description {
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* ==========================================================================
+   ANIMATIONS & INTERACTIVITY
+   ========================================================================== */
+/* Keyframe for fade in effect for content sections */
+@keyframes fadeInUp {
+  from {
     opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* When .zoom class is added, trigger the zoom animation */
-#splash.zoom {
-  animation: zoomIn 1.5s forwards;
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 3em;
+  }
+  
+  .sub-title {
+    font-size: 1.2em;
+  }
+  
+  .cta-button {
+    padding: 12px 30px;
+    font-size: 0.9em;
+  }
+  
+  .product-item img {
+    width: 200px;
+  }
+  
+  nav ul {
+    gap: 10px;
+  }
+  
+  nav a {
+    font-size: 0.9em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-section {
+    padding: 150px 40px;
+  }
+}
+
+/* ==========================================================================
+   EXTRA LUXURY STYLING
+   ========================================================================== */
+/* Vignette effect on hero for added depth */
+.hero::after {
+  content: '';\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 100px;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);\n  z-index: 2;\n}
+
+/* Additional glow for interactive elements */
+nav a:hover,
+.cta-button:hover {
+  text-shadow: 0px 0px 10px var(--shadow-light);
 }
