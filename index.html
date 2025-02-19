@@ -1,80 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>L'Occhio Oscuro</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
   <script defer src="script.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Background Overlays -->
-  <div class="overlay"></div>
-  <div class="fog-layer"></div>
-
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">
-      <img src="image.png" alt="L'Occhio Oscuro Logo">
-    </div>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#collection">Collection</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <h1 class="main-title spotlight">Unveiling the Hidden</h1>
-    <p class="sub-title">Where mystery meets luxury</p>
-    <a href="#collection" class="cta-button">Discover</a>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="content-section">
-    <h2>About</h2>
-    <p>L'Occhio Oscuro blends luxury with mystique, inspired by ancient secrets and modern elegance.</p>
-  </section>
-
-  <!-- Collection Section -->
-  <section id="collection" class="content-section">
-    <h2>Collection</h2>
-    <div class="product-grid">
-      <div class="product-item">
-        <img src="product1.jpg" alt="Product 1">
-        <p>Product 1</p>
+  <!-- Splash Screen (Magic Door) -->
+  <div id="splash">
+    <!-- The magic door background is applied via CSS -->
+    <div class="splash-button"></div>
+  </div>
+  
+  <!-- Main Site Content (Hidden Initially) -->
+  <div id="main-content">
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="logo">
+        <img src="your-logo.png" alt="L'Occhio Oscuro Logo">
       </div>
-      <div class="product-item">
-        <img src="product2.jpg" alt="Product 2">
-        <p>Product 2</p>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#collection">Collection</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <!-- About Section -->
+    <section id="about" class="content-section">
+      <h2>About</h2>
+      <p>L'Occhio Oscuro blends luxury with mystique, inspired by ancient secrets and modern elegance.</p>
+    </section>
+    
+    <!-- Collection Section -->
+    <section id="collection" class="content-section">
+      <h2>Collection</h2>
+      <div class="product-grid">
+        <div class="product-item">
+          <img src="design1.jpg" alt="Product 1">
+          <p>Product 1</p>
+        </div>
+        <div class="product-item">
+          <img src="design2.jpg" alt="Product 2">
+          <p>Product 2</p>
+        </div>
+        <div class="product-item">
+          <img src="design3.jpg" alt="Product 3">
+          <p>Product 3</p>
+        </div>
       </div>
-      <div class="product-item">
-        <img src="product3.jpg" alt="Product 3">
-        <p>Product 3</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="content-section">
-    <h2>Contact</h2>
-    <p>Connect with us for exclusive access and inquiries.</p>
-    <form>
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit">Send</button>
-    </form>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 L'Occhio Oscuro. All Rights Reserved.</p>
-  </footer>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="content-section">
+      <h2>Contact</h2>
+      <p>Connect with us for exclusive access and inquiries.</p>
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" required></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 L'Occhio Oscuro. All Rights Reserved.</p>
+    </footer>
+  </div>
 </body>
 </html>
