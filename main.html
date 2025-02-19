@@ -16,7 +16,7 @@
   <!-- Navbar -->
   <header class="navbar">
     <div class="logo">
-      <img src="your-logo.png" alt="L'Occhio Oscuro Logo" />
+      <img src="image.png" alt="L'Occhio Oscuro Logo" />
     </div>
     <nav>
       <ul>
@@ -38,8 +38,12 @@
   <!-- About Section -->
   <section id="about" class="content-section">
     <h2>About</h2>
-    <p>L'Occhio Oscuro blends luxury with mystique, inspired by ancient secrets and modern elegance. Our vision is to create an experience that transcends ordinary fashion and delves into the realm of timeless mystery.</p>
-    <p>Each piece in our collection carries stories of lost temples and hidden artifacts, merging opulent design with the whispers of forgotten civilizations. Discover garments that exude ancient intrigue and define modern style.</p>
+    <div class="about-content">
+      <p>
+        At L'Occhio Oscuro, we blend luxury with mystique, drawing inspiration from ancient secrets and modern elegance.
+        Our collections evoke the timeless allure of forgotten civilizations, where every garment carries a story.
+      </p> 
+    </div>
   </section>
 
   <!-- Collection Section (Interactive Modal Gallery) -->
@@ -50,7 +54,7 @@
         <img src="design1.jpg" alt="Product 1" />
         <p>Product 1</p>
       </div>
-      <div class="product-item" data-title="Product 2" data-img="design2.jpg" data-description="Product 2: Luxurious design meets hidden jungle secrets.">
+      <div class="product-item" data-title="Product 2" data-img="design2.jpg" data-description="Product 2: Luxurious design meets jungle secrets.">
         <img src="design2.jpg" alt="Product 2" />
         <p>Product 2</p>
       </div>
@@ -61,16 +65,24 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact Section (Interactive Form) -->
   <section id="contact" class="content-section">
     <h2>Contact</h2>
-    <p>Connect with us for exclusive access and inquiries.</p>
-    <form>
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit">Send</button>
-    </form>
+    <div class="contact-content">
+      <p>Connect with us for exclusive access and inquiries.</p>
+      <form id="contact-form">
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <textarea name="message" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="cta-button">Send Message</button>
+      </form>
+    </div>
   </section>
 
   <!-- Footer -->
