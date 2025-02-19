@@ -1,0 +1,64 @@
+/* Basic reset and full viewport coverage */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* No scrolling on splash */
+  background: #000; /* Fallback background if needed */
+}
+
+/* Splash container occupies the entire screen */
+#splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999; /* Ensure it's on top of everything else */
+  overflow: hidden;
+}
+
+/* The Spline design (iframe) covers the entire splash area */
+#splash iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Invisible button in the central 50% portion of the screen */
+.splash-button {
+  position: absolute;
+  top: 25%;  /* from 25% to 75% vertically */
+  left: 25%; /* from 25% to 75% horizontally */
+  width: 50%;
+  height: 50%;
+  cursor: pointer;
+  background: transparent;
+  z-index: 2; /* Above the iframe */
+}
+
+/* Zoom animation to simulate flying into the door */
+@keyframes zoomIn {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(20);
+    opacity: 0;
+  }
+}
+
+/* When .zoom class is added, trigger the zoom animation */
+#splash.zoom {
+  animation: zoomIn 1.5s forwards;
+}
