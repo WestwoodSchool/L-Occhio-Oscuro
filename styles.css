@@ -9,30 +9,33 @@
 }
 
 :root {
-  --primary-bg: #0a0a0a;          /* Deep black background */
-  --secondary-color: #ffffff;     /* White text */
-  --accent-color: #d4af37;        /* Gold accent for luxury */
+  --primary-bg: #0a0a0a;           /* Deep Black */
+  --secondary-color: #ffffff;      /* White */
+  --accent-color: #d4af37;         /* Gold Accent */
   --overlay-opacity: 0.3;
   --fog-opacity: 0.15;
   --transition-duration: 0.3s;
   --hero-title-size: 4em;
   --hero-subtitle-size: 1.5em;
+  --modal-bg: rgba(0, 0, 0, 0.85);
+  --shadow-light: rgba(212, 175, 55, 0.8);
+  --shadow-soft: rgba(212, 175, 55, 0.4);
+  --perspective-depth: 1000px;
 }
 
-/* Base Body Styles */
+/* Base Body */
 body {
   background-color: var(--primary-bg);
   color: var(--secondary-color);
   overflow-x: hidden;
-  position: relative;
   line-height: 1.6;
+  perspective: var(--perspective-depth);
+  position: relative;
 }
 
 /* ==========================================================================
-   BACKGROUND OVERLAYS & FOG EFFECT
+   BACKGROUND OVERLAYS & FOG LAYER
    ========================================================================== */
-
-/* Dark radial overlay for depth */
 .overlay {
   position: fixed;
   top: 0;
@@ -43,7 +46,6 @@ body {
   z-index: -2;
 }
 
-/* Fog Layer: animated fog to add mystery */
 .fog-layer {
   position: fixed;
   top: 0;
@@ -58,8 +60,12 @@ body {
 }
 
 @keyframes fogMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 1000px 1000px; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1000px 1000px;
+  }
 }
 
 /* ==========================================================================
@@ -83,6 +89,10 @@ body {
   transition: transform 0.3s;
 }
 
+.logo img:hover {
+  transform: scale(1.1) rotateY(10deg);
+}
+
 nav ul {
   list-style: none;
   display: flex;
@@ -94,15 +104,30 @@ nav a {
   color: var(--secondary-color);
   font-weight: 700;
   transition: color var(--transition-duration);
+  position: relative;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s;
 }
 
 nav a:hover {
   color: var(--accent-color);
-  text-shadow: 0px 0px 10px rgba(212, 175, 55, 0.6);
+}
+
+nav a:hover::after {
+  width: 100%;
 }
 
 /* ==========================================================================
-   HERO SECTION
+   HERO SECTION WITH 3D EFFECTS
    ========================================================================== */
 .hero {
   position: relative;
@@ -113,13 +138,12 @@ nav a:hover {
   align-items: center;
   text-align: center;
   background: url('mystical-ancient-gateway-stockcake.jpg') center/cover no-repeat;
-  overflow: hidden;
+  transform-style: preserve-3d;
   z-index: 0;
+  overflow: hidden;
 }
 
-/* Dark overlay for enhanced contrast */
-.hero::before {
-  content: '';
+.hero-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -129,7 +153,6 @@ nav a:hover {
   z-index: 1;
 }
 
-/* Golden spotlight on hero title */
 .main-title {
   font-size: var(--hero-title-size);
   font-weight: 700;
@@ -137,15 +160,16 @@ nav a:hover {
   margin-bottom: 10px;
   position: relative;
   color: var(--accent-color);
-  text-shadow: 0px 0px 30px rgba(212, 175, 55, 0.6);
+  text-shadow: 0px 0px 30px var(--shadow-light);
   z-index: 2;
+  transform: translateZ(30px);
   animation: spotlightShimmer 3s infinite ease-in-out;
 }
 
 @keyframes spotlightShimmer {
-  0% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
-  50% { text-shadow: 0px 0px 40px rgba(212, 175, 55, 0.8); }
-  100% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
+  0% { text-shadow: 0px 0px 20px var(--shadow-soft); }
+  50% { text-shadow: 0px 0px 40px var(--shadow-light); }
+  100% { text-shadow: 0px 0px 20px var(--shadow-soft); }
 }
 
 .sub-title {
@@ -154,6 +178,7 @@ nav a:hover {
   margin-bottom: 20px;
   position: relative;
   z-index: 2;
+  transform: translateZ(20px);
 }
 
 /* ==========================================================================
@@ -162,8 +187,8 @@ nav a:hover {
 .content-section {
   padding: 100px 20px;
   text-align: center;
-  opacity: 0; /* Initially hidden for fade-in animation */
-  transform: translateY(50px); /* Start offset for animation */
+  opacity: 0;
+  transform: translateY(50px) translateZ(0px);
   transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
@@ -173,17 +198,24 @@ nav a:hover {
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 40px;
+  transform: perspective(1000px) rotateX(0deg);
+  transition: transform 0.6s ease-out;
+}
+
+.product-grid:hover {
+  transform: perspective(1000px) rotateX(3deg);
 }
 
 .product-item {
   background: #212121;
   padding: 10px;
   border-radius: 10px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(20px);
+  box-shadow: 0px 5px 15px rgba(212, 175, 55, 0.4);
 }
 
 .product-item img {
@@ -192,6 +224,7 @@ nav a:hover {
   border-radius: 10px;
   display: block;
   margin: auto;
+  transition: transform 0.3s;
 }
 
 .product-item p {
@@ -209,7 +242,7 @@ form {
   align-items: center;
   gap: 10px;
   max-width: 400px;
-  margin: 40px auto 0 auto;
+  margin: 40px auto;
 }
 
 form input, form textarea {
@@ -220,6 +253,11 @@ form input, form textarea {
   font-size: 1em;
   background: rgba(255,255,255,0.1);
   color: var(--secondary-color);
+  transition: background 0.3s;
+}
+
+form input:focus, form textarea:focus {
+  background: rgba(255,255,255,0.2);
 }
 
 form button {
@@ -228,12 +266,13 @@ form button {
   color: var(--primary-bg);
   border: none;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.3s;
   border-radius: 5px;
 }
 
 form button:hover {
   background: #b89732;
+  transform: translateY(-3px);
 }
 
 /* ==========================================================================
@@ -248,9 +287,68 @@ footer {
 }
 
 /* ==========================================================================
+   MODAL (Interactive Product Details)
+   ========================================================================== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modal-close {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  font-size: 2em;
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.modal-close:hover {
+  color: var(--accent-color);
+}
+
+#modal-img {
+  max-width: 400px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transform: translateZ(30px);
+}
+
+#modal-title {
+  color: var(--accent-color);
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  transform: translateZ(20px);
+}
+
+#modal-description {
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* ==========================================================================
    ANIMATIONS & INTERACTIVITY
    ========================================================================== */
-/* Keyframe for general fade in effect (for content sections, etc.) */
+/* Fade-In Animation for Content Sections (used with IntersectionObserver in JS) */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -269,55 +367,27 @@ footer {
   .main-title {
     font-size: 3em;
   }
-  
   .sub-title {
     font-size: 1.2em;
   }
-  
   .cta-button {
     padding: 12px 30px;
     font-size: 0.9em;
   }
-  
   .product-item img {
     width: 200px;
   }
-  
   nav ul {
     gap: 10px;
   }
-  
   nav a {
     font-size: 0.9em;
   }
 }
 
-/* ==========================================================================
-   EXTRA LUXURY STYLING & FINISHES
-   ========================================================================== */
-/* Vignette effect on hero section for extra depth */
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-  z-index: 2;
-}
-
-/* Subtle glow on interactive elements */
-nav a:hover,
-.cta-button:hover {
-  text-shadow: 0px 0px 10px rgba(212, 175, 55, 0.6);
-}
-
-/* Additional spacing on larger screens for a luxurious layout */
+/* Additional spacing for larger screens */
 @media (min-width: 1024px) {
   .content-section {
     padding: 150px 40px;
   }
 }
-
-/* End of CSS */
