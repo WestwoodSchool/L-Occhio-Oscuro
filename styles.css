@@ -9,9 +9,9 @@
 }
 
 :root {
-  --primary-bg: #0a0a0a;           /* Deep Black */
-  --secondary-color: #ffffff;      /* White */
-  --accent-color: #d4af37;         /* Gold Accent */
+  --primary-bg: #0a0a0a;           /* Deep black background */
+  --secondary-color: #ffffff;      /* White text */
+  --accent-color: #d4af37;         /* Gold accent */
   --overlay-opacity: 0.3;
   --fog-opacity: 0.15;
   --transition-duration: 0.3s;
@@ -23,18 +23,18 @@
   --perspective-depth: 1000px;
 }
 
-/* Base Body */
+/* Base Body Styles */
 body {
   background-color: var(--primary-bg);
   color: var(--secondary-color);
   overflow-x: hidden;
+  position: relative;
   line-height: 1.6;
   perspective: var(--perspective-depth);
-  position: relative;
 }
 
 /* ==========================================================================
-   BACKGROUND OVERLAYS & FOG LAYER
+   OVERLAYS & FOG EFFECT
    ========================================================================== */
 .overlay {
   position: fixed;
@@ -60,16 +60,12 @@ body {
 }
 
 @keyframes fogMove {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 1000px 1000px;
-  }
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 1000px; }
 }
 
 /* ==========================================================================
-   NAVIGATION BAR
+   NAVIGATION BAR (Fixed)
    ========================================================================== */
 .navbar {
   display: flex;
@@ -127,20 +123,20 @@ nav a:hover::after {
 }
 
 /* ==========================================================================
-   HERO SECTION WITH 3D EFFECTS
+   HERO SECTION
    ========================================================================== */
 .hero {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   background: url('mystical-ancient-gateway-stockcake.jpg') center/cover no-repeat;
-  transform-style: preserve-3d;
-  z-index: 0;
   overflow: hidden;
+  z-index: 0;
+  transform-style: preserve-3d;
 }
 
 .hero-overlay {
@@ -181,6 +177,18 @@ nav a:hover::after {
   transform: translateZ(20px);
 }
 
+/* Vignette Effect on Hero Bottom */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  z-index: 2;
+}
+
 /* ==========================================================================
    CONTENT SECTIONS
    ========================================================================== */
@@ -188,7 +196,7 @@ nav a:hover::after {
   padding: 100px 20px;
   text-align: center;
   opacity: 0;
-  transform: translateY(50px) translateZ(0px);
+  transform: translateY(50px);
   transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
@@ -224,7 +232,7 @@ nav a:hover::after {
   border-radius: 10px;
   display: block;
   margin: auto;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .product-item p {
@@ -234,37 +242,51 @@ nav a:hover::after {
 }
 
 /* ==========================================================================
-   CONTACT FORM
+   CONTACT FORM (Professional Style)
    ========================================================================== */
+.contact-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  max-width: 400px;
-  margin: 40px auto;
+  gap: 15px;
+  margin-top: 20px;
 }
 
-form input, form textarea {
+.form-group {
   width: 100%;
-  padding: 10px;
-  border: none;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
   font-size: 1em;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: var(--secondary-color);
-  transition: background 0.3s;
+  transition: border 0.3s, background 0.3s;
 }
 
-form input:focus, form textarea:focus {
-  background: rgba(255,255,255,0.2);
+form input:focus,
+form textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 form button {
-  padding: 10px 20px;
+  padding: 12px 25px;
   background: var(--accent-color);
   color: var(--primary-bg);
   border: none;
+  font-size: 1em;
   cursor: pointer;
   transition: background 0.3s, transform 0.3s;
   border-radius: 5px;
@@ -295,7 +317,7 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.85);
+  background: var(--modal-bg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -385,9 +407,21 @@ footer {
   }
 }
 
-/* Additional spacing for larger screens */
 @media (min-width: 1024px) {
   .content-section {
     padding: 150px 40px;
   }
+}
+
+/* ==========================================================================
+   EXTRA LUXURY STYLING & FINISHES
+   ========================================================================== */
+/* Vignette Effect on Hero for Additional Depth */
+.hero::after {
+  content: '';\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    width: 100%;\n    height: 100px;\n    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);\n    z-index: 2;\n}
+
+/* Subtle glow for interactive elements */
+nav a:hover,
+.cta-button:hover {
+  text-shadow: 0px 0px 10px var(--shadow-light);
 }
