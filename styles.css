@@ -9,10 +9,10 @@
 }
 
 :root {
-  --primary-bg: #0a0a0a;          /* Deep, dark background */
-  --secondary-color: #ffffff;     /* White text */
-  --accent-color: #d4af37;        /* Luxurious gold accent */
-  --jungle-green: #3a5f0b;        /* Deep jungle green for subtle accents */
+  --primary-bg: #0a0a0a;           /* Deep, dark background */
+  --secondary-color: #ffffff;      /* White text */
+  --accent-color: #d4af37;         /* Luxurious gold accent */
+  --jungle-green: #3a5f0b;         /* Subtle deep jungle green */
   --overlay-opacity: 0.3;
   --fog-opacity: 0.15;
   --transition-duration: 0.3s;
@@ -21,20 +21,19 @@
   --max-width: 1200px;
   --input-bg: rgba(255, 255, 255, 0.1);
   --input-focus-bg: rgba(255, 255, 255, 0.15);
-  --input-border: 1px solid rgba(255, 255, 255, 0.2);
-  --input-focus-border: 1px solid var(--accent-color);
+  --shadow-light: rgba(212, 175, 55, 0.8);
+  --shadow-soft: rgba(212, 175, 55, 0.4);
+  --perspective-depth: 1000px;
 }
 
-/* ==========================================================================
-   BASE STYLES
-   ========================================================================== */
+/* Base Body Styles */
 body {
   background-color: var(--primary-bg);
   color: var(--secondary-color);
   overflow-x: hidden;
   line-height: 1.6;
   position: relative;
-  font-size: 16px;
+  perspective: var(--perspective-depth);
 }
 
 /* ==========================================================================
@@ -50,6 +49,7 @@ body {
   z-index: -2;
 }
 
+/* Fog Layer with Animation */
 .fog-layer {
   position: fixed;
   top: 0;
@@ -61,6 +61,12 @@ body {
   opacity: var(--fog-opacity);
   z-index: 1;
   animation: fogMove 30s linear infinite;
+  transition: transform 0.5s ease-out;
+}
+
+/* On hover, the fog shifts away (simulated effect) */
+.fog-layer:hover {
+  transform: translate(-50px, -50px);
 }
 
 @keyframes fogMove {
@@ -127,7 +133,7 @@ nav a:hover::after {
 }
 
 /* ==========================================================================
-   HERO SECTION
+   HERO SECTION WITH 3D EFFECTS
    ========================================================================== */
 .hero {
   position: relative;
@@ -160,16 +166,16 @@ nav a:hover::after {
   margin-bottom: 10px;
   position: relative;
   color: var(--accent-color);
-  text-shadow: 0px 0px 30px rgba(212, 175, 55, 0.6);
+  text-shadow: 0px 0px 30px var(--shadow-light);
   z-index: 2;
   transform: translateZ(30px);
   animation: spotlightShimmer 3s infinite ease-in-out;
 }
 
 @keyframes spotlightShimmer {
-  0% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
-  50% { text-shadow: 0px 0px 40px rgba(212, 175, 55, 0.8); }
-  100% { text-shadow: 0px 0px 20px rgba(212, 175, 55, 0.4); }
+  0% { text-shadow: 0px 0px 20px var(--shadow-soft); }
+  50% { text-shadow: 0px 0px 40px var(--shadow-light); }
+  100% { text-shadow: 0px 0px 20px var(--shadow-soft); }
 }
 
 .sub-title {
@@ -181,7 +187,7 @@ nav a:hover::after {
   transform: translateZ(20px);
 }
 
-/* Vignette Effect */
+/* Vignette Effect on Hero */
 .hero::after {
   content: '';
   position: absolute;
@@ -285,23 +291,21 @@ form {
   width: 100%;
 }
 
-form input,
-form textarea {
+form input, form textarea {
   width: 100%;
   padding: 12px 15px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
   font-size: 1em;
-  background: var(--input-bg);
+  background: var(--input-bg, rgba(255, 255, 255, 0.1));
   color: var(--secondary-color);
   transition: border 0.3s, background 0.3s;
 }
 
-form input:focus,
-form textarea:focus {
+form input:focus, form textarea:focus {
   outline: none;
   border-color: var(--accent-color);
-  background: var(--input-focus-bg);
+  background: var(--input-focus-bg, rgba(255, 255, 255, 0.15));
 }
 
 form button {
@@ -393,7 +397,6 @@ footer {
 /* ==========================================================================
    ANIMATIONS & INTERACTIVITY
    ========================================================================== */
-/* Fade-In Animation for Content Sections (triggered via IntersectionObserver in JS) */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -412,19 +415,24 @@ footer {
   .main-title {
     font-size: 3em;
   }
+  
   .sub-title {
     font-size: 1.2em;
   }
+  
   .cta-button {
     padding: 12px 30px;
     font-size: 0.9em;
   }
+  
   .product-item img {
     width: 200px;
   }
+  
   nav ul {
     gap: 10px;
   }
+  
   nav a {
     font-size: 0.9em;
   }
@@ -439,11 +447,11 @@ footer {
 /* ==========================================================================
    EXTRA LUXURY STYLING & FINISHES
    ========================================================================== */
-/* Vignette Effect on Hero Section */
+/* Vignette Effect on Hero for added depth */
 .hero::after {
   content: '';\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 100px;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);\n  z-index: 2;\n}
 
-/* Additional glow for interactive elements */
+/* Glow for interactive elements */
 nav a:hover,
 .cta-button:hover {
   text-shadow: 0px 0px 10px var(--shadow-light);
