@@ -1,105 +1,450 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>L'Occhio Oscuro – Main Site</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script defer src="script.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Occhio Oscuro - Luxury Fashion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+animation: fadeIn 0.8s ease-out forwards;
+}
+.font-cinzel { font-family: 'Cinzel', serif; }
+.font-cormorant { font-family: 'Cormorant Garamond', serif; }
+.menu-overlay {
+backdrop-filter: blur(8px);
+background: rgba(0, 0, 0, 0.85);
+}
+.golden-gradient {
+background: linear-gradient(45deg, #B8860B, #FFD700, #DAA520);
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+}
+.temple-background {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 300vh;
+background-image: url('https://public.readdy.ai/ai/img_res/b9cd4e723577bc39ff35610dd020e6ce.jpg');
+background-size: cover;
+background-position: top center;
+z-index: -1;
+transition: transform 0.1s linear;
+}
+.product-popup {
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: rgba(0, 0, 0, 0.95);
+padding: 2rem;
+border-radius: 16px;
+z-index: 100;
+width: 90%;
+max-width: 800px;
+display: none;
+backdrop-filter: blur(10px);
+border: 1px solid rgba(184, 134, 11, 0.2);
+}
+.product-popup.active {
+display: block;
+animation: popupFadeIn 0.3s ease;
+}
+@keyframes popupFadeIn {
+from {
+opacity: 0;
+transform: translate(-50%, -48%);
+}
+to {
+opacity: 1;
+transform: translate(-50%, -50%);
+}
+}
+.product-gallery {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 1rem;
+margin-top: 1rem;
+}
+.product-gallery img {
+width: 100%;
+height: 100px;
+object-fit: cover;
+cursor: pointer;
+transition: transform 0.3s ease;
+}
+.product-gallery img:hover {
+transform: scale(1.05);
+}
+.size-selector {
+display: flex;
+gap: 0.5rem;
+margin: 1rem 0;
+}
+.size-btn {
+padding: 0.5rem 1rem;
+border: 1px solid rgba(184, 134, 11, 0.5);
+border-radius: 4px;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+.size-btn.active {
+background: #B8860B;
+color: white;
+}
+.scroll-reveal {
+opacity: 0;
+transform: translateY(30px);
+transition: all 0.8s ease;
+}
+.scroll-reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+</style>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#B8860B',
+secondary: '#2D2D2D'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
 </head>
-<body>
-  <!-- Background Overlays & Fog -->
-  <div class="overlay"></div>
-  <div class="fog-layer"></div>
-
-  <!-- Fixed Navbar -->
-  <header class="navbar">
-    <div class="logo">
-      <img src="image.png" alt="L'Occhio Oscuro Logo" />
-    </div>
-    <nav>
-      <ul>
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#collection">Collection</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Hero Section with Golden Spotlight -->
-  <section id="hero" class="hero">
-    <div class="hero-overlay"></div>
-    <h1 class="main-title spotlight">Unveiling the Hidden</h1>
-    <p class="sub-title">Where mystery meets luxury</p>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="content-section">
-    <h2>About</h2>
-    <div class="about-content">
-      <p>
-        At L'Occhio Oscuro, we blend luxury with mystique, drawing inspiration from ancient secrets and modern elegance.
-        Our collections evoke the timeless allure of forgotten civilizations, where every garment carries a story.
-      </p>
-      <p>
-        Meticulously crafted and steeped in tradition, our designs are a testament to opulent artistry.
-        Discover a world where heritage meets high fashion, and mystery is woven into every thread.
-      </p>
-    </div>
-  </section>
-
-  <!-- Collection Section (Interactive Modal Gallery) -->
-  <section id="collection" class="content-section">
-    <h2>Collection</h2>
-    <div class="product-grid">
-      <div class="product-item" data-title="Product 1" data-img="design1.jpg" data-description="Product 1: A timeless piece inspired by ancient relics.">
-        <img src="design1.jpg" alt="Product 1">
-        <p>Product 1</p>
-      </div>
-      <div class="product-item" data-title="Product 2" data-img="design2.jpg" data-description="Product 2: Luxurious design meets hidden jungle secrets.">
-        <img src="design2.jpg" alt="Product 2">
-        <p>Product 2</p>
-      </div>
-      <div class="product-item" data-title="Product 3" data-img="design3.jpg" data-description="Product 3: Modern elegance with a touch of ancient lore.">
-        <img src="design3.jpg" alt="Product 3">
-        <p>Product 3</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section (Refined, Professional Form) -->
-  <section id="contact" class="content-section">
-    <h2>Contact</h2>
-    <div class="contact-container">
-      <p>Connect with us for exclusive access and inquiries.</p>
-      <form id="contact-form">
-        <div class="form-group">
-          <input type="text" name="name" placeholder="Your Name" required>
-        </div>
-        <div class="form-group">
-          <input type="email" name="email" placeholder="Your Email" required>
-        </div>
-        <div class="form-group">
-          <textarea name="message" placeholder="Your Message" required></textarea>
-        </div>
-        <button type="submit" class="cta-button">Send Message</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 L'Occhio Oscuro. All Rights Reserved.</p>
-  </footer>
-
-  <!-- Product Modal (Interactive Product Details) -->
-  <div id="product-modal" class="modal hidden">
-    <span class="modal-close">&times;</span>
-    <img id="modal-img" src="" alt="Product Preview">
-    <h3 id="modal-title"></h3>
-    <p id="modal-description"></p>
-  </div>
+<body class="text-white min-h-screen">
+<nav class="fixed w-full z-50 bg-transparent">
+<div class="container mx-auto px-6 py-4 flex justify-between items-center">
+<h1 class="text-3xl font-['Pacifico'] golden-gradient">L'Occhio Oscuro</h1>
+<button id="menuBtn" class="w-10 h-10 flex items-center justify-center cursor-pointer">
+<i class="ri-menu-line text-2xl text-primary"></i>
+</button>
+</div>
+</nav>
+<div id="menuOverlay" class="fixed inset-0 menu-overlay hidden z-40">
+<div class="h-full flex flex-col justify-center items-center space-y-12 pt-20">
+<a href="#collections" class="text-2xl font-cinzel golden-gradient hover:scale-110 transition-transform cursor-pointer">Collections</a>
+<a href="#heritage" class="text-2xl font-cinzel golden-gradient hover:scale-110 transition-transform cursor-pointer">Heritage</a>
+<a href="#artifacts" class="text-2xl font-cinzel golden-gradient hover:scale-110 transition-transform cursor-pointer">Artifacts</a>
+<a href="#stories" class="text-2xl font-cinzel golden-gradient hover:scale-110 transition-transform cursor-pointer">Sacred Stories</a>
+<a href="#contact" class="text-2xl font-cinzel golden-gradient hover:scale-110 transition-transform cursor-pointer">Temple Contact</a>
+</div>
+</div>
+<header class="relative h-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0">
+<img src="https://public.readdy.ai/ai/img_res/37f3ed39bc300ffd085833acb04ec02a.jpg" class="w-full h-full object-cover" alt="Hero Background">
+<div class="absolute inset-0 bg-black bg-opacity-50"></div>
+</div>
+<div class="relative text-center px-6">
+<h2 class="text-6xl md:text-8xl font-cinzel mb-8 golden-gradient animate-fade-in">Discover the Sacred</h2>
+<p class="text-xl md:text-2xl font-cormorant mb-12 animate-fade-in">Where Ancient Mystery Meets Modern Luxury</p>
+<button class="bg-primary text-white px-8 py-3 text-lg font-cinzel !rounded-button hover:bg-opacity-80 transition-all animate-fade-in cursor-pointer whitespace-nowrap">
+Explore Collection
+</button>
+</div>
+</header>
+<section id="collections" class="py-24" style="background: linear-gradient(to right, #000000, #001a0f, #000000)">
+<div class="container mx-auto px-6">
+<h2 class="text-4xl font-cinzel golden-gradient text-center mb-16">Latest Collections</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="collection-card bg-black rounded-lg overflow-hidden cursor-pointer">
+<img src="https://public.readdy.ai/ai/img_res/2adfeb6bd23d661a61844c075d265e0a.jpg" class="w-full h-96 object-cover" alt="Collection 1">
+<div class="p-6">
+<h3 class="text-2xl font-cinzel golden-gradient">The Oracle Collection</h3>
+<p class="font-cormorant mt-2">Ancient wisdom reimagined in modern luxury</p>
+</div>
+</div>
+<div class="collection-card bg-black rounded-lg overflow-hidden cursor-pointer">
+<img src="https://public.readdy.ai/ai/img_res/cae394bce7d68dd8bf41ccb7806e1877.jpg" class="w-full h-96 object-cover" alt="Collection 2">
+<div class="p-6">
+<h3 class="text-2xl font-cinzel golden-gradient">Temple Treasures</h3>
+<p class="font-cormorant mt-2">Sacred artifacts for the modern mystic</p>
+</div>
+</div>
+<div class="collection-card bg-black rounded-lg overflow-hidden cursor-pointer">
+<img src="https://public.readdy.ai/ai/img_res/438eebe088559c0819f5ea42a3f75ea4.jpg" class="w-full h-96 object-cover" alt="Collection 3">
+<div class="p-6">
+<h3 class="text-2xl font-cinzel golden-gradient">Mystic Noir</h3>
+<p class="font-cormorant mt-2">Darkness embraced in elegance</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="heritage" class="py-24 relative overflow-hidden">
+<div class="absolute inset-0">
+<img src="https://public.readdy.ai/ai/img_res/c62ac9090f0438734859ed0dfb1f7646.jpg" class="w-full h-full object-cover" alt="Heritage Background">
+<div class="absolute inset-0 bg-black bg-opacity-70"></div>
+</div>
+<div class="container mx-auto px-6 relative">
+<div class="max-w-3xl mx-auto text-center">
+<h2 class="text-4xl font-cinzel golden-gradient mb-8">Our Sacred Heritage</h2>
+<p class="text-xl font-cormorant mb-12 leading-relaxed">
+Born from the fusion of ancient wisdom and contemporary luxury, L'Occhio Oscuro stands as a testament to timeless elegance. Each piece we create carries within it the echoes of forgotten temples and the whispers of sacred traditions.
+</p>
+<button class="bg-primary text-white px-8 py-3 text-lg font-cinzel !rounded-button hover:bg-opacity-80 transition-all cursor-pointer whitespace-nowrap">
+Discover Our Story
+</button>
+</div>
+</div>
+</section>
+<section id="artifacts" class="py-24 relative">
+<div class="absolute inset-0 bg-black bg-opacity-90"></div>
+<div class="container mx-auto px-6 relative z-10">
+<h2 class="text-4xl font-cinzel golden-gradient text-center mb-16">Sacred Artifacts</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="product-card bg-black bg-opacity-50 backdrop-blur-sm rounded-lg overflow-hidden cursor-pointer transform hover:scale-105 transition-transform duration-300 border border-primary border-opacity-20">
+<img src="https://public.readdy.ai/ai/img_res/2a8003e803ae57785ba83e12d4372940.jpg" class="w-full h-64 object-cover" alt="Product 1">
+<div class="p-6">
+<h3 class="text-xl font-cinzel golden-gradient">The Oracle Ring</h3>
+<p class="font-cormorant mt-2">$2,850</p>
+</div>
+</div>
+<div class="product-card bg-black bg-opacity-50 backdrop-blur-sm rounded-lg overflow-hidden cursor-pointer transform hover:scale-105 transition-transform duration-300 border border-primary border-opacity-20">
+<img src="https://public.readdy.ai/ai/img_res/904ad8dd22e6d6bc4709677d002b68e7.jpg" class="w-full h-64 object-cover" alt="Product 2">
+<div class="p-6">
+<h3 class="text-xl font-cinzel golden-gradient">Temple Pendant</h3>
+<p class="font-cormorant mt-2">$3,200</p>
+</div>
+</div>
+<div class="product-card bg-black bg-opacity-50 backdrop-blur-sm rounded-lg overflow-hidden cursor-pointer transform hover:scale-105 transition-transform duration-300 border border-primary border-opacity-20">
+<img src="https://public.readdy.ai/ai/img_res/3cf9bc0f5bb5cda7bcf3605d929d9a95.jpg" class="w-full h-64 object-cover" alt="Product 3">
+<div class="p-6">
+<h3 class="text-xl font-cinzel golden-gradient">Sacred Bracelet</h3>
+<p class="font-cormorant mt-2">$1,950</p>
+</div>
+</div>
+<div class="product-card bg-black bg-opacity-50 backdrop-blur-sm rounded-lg overflow-hidden cursor-pointer transform hover:scale-105 transition-transform duration-300 border border-primary border-opacity-20">
+<img src="https://public.readdy.ai/ai/img_res/06c31ee8ff07d20774b8e7df203c1b2d.jpg" class="w-full h-64 object-cover" alt="Product 4">
+<div class="p-6">
+<h3 class="text-xl font-cinzel golden-gradient">Mystic Watch</h3>
+<p class="font-cormorant mt-2">$5,800</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="stories" class="py-24 relative overflow-hidden">
+<div class="absolute inset-0">
+<img src="https://public.readdy.ai/ai/img_res/f6dc0e3ee3d206d3c5e8e2ccd1920060.jpg" class="w-full h-full object-cover" alt="Stories Background">
+<div class="absolute inset-0 bg-black bg-opacity-70"></div>
+</div>
+<div class="container mx-auto px-6 relative">
+<h2 class="text-4xl font-cinzel golden-gradient text-center mb-16">Sacred Stories</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<article class="bg-black bg-opacity-80 rounded-lg overflow-hidden cursor-pointer">
+<img src="https://public.readdy.ai/ai/img_res/61bc10200b3f74a8d9a8aa9bf575f8ba.jpg" class="w-full h-48 object-cover" alt="Story 1">
+<div class="p-6">
+<h3 class="text-xl font-cinzel golden-gradient">The Temple's Secret</h3>
+<p class="font-cormorant mt-2">Unveiling the mysteries behind our latest collection</p>
+</div>
+</article>
+<article class="bg-black bg-opacity-80 rounded-lg overflow-hidden cursor-pointer">
+<img src="https://public.readdy.ai/ai/img_res/27ff441cf4978a88a769eaae2d700b37.jpg" class="w-full h-48 object-cover" alt="Story 2">
+<div class="p-6">
+<h3 class="text-xl font-cinzel golden-gradient">Artisan's Journey</h3>
+<p class="font-cormorant mt-2">The sacred art of crafting luxury</p>
+</div>
+</article>
+<article class="bg-black bg-opacity-80 rounded-lg overflow-hidden cursor-pointer">
+<img src="https://public.readdy.ai/ai/img_res/3fbb5075034b5beb4026c771e93b8c6f.jpg" class="w-full h-48 object-cover" alt="Story 3">
+<div class="p-6">
+<h3 class="text-xl font-cinzel golden-gradient">Modern Mysticism</h3>
+<p class="font-cormorant mt-2">Where tradition meets contemporary luxury</p>
+</div>
+</article>
+</div>
+</div>
+</section>
+<section id="contact" class="py-24" style="background: linear-gradient(to right, #000000, #001a0f, #000000)">
+<div class="container mx-auto px-6">
+<h2 class="text-4xl font-cinzel golden-gradient text-center mb-16">Temple Contact</h2>
+<div class="max-w-2xl mx-auto bg-black rounded-lg p-8">
+<form id="contactForm" class="space-y-6">
+<div>
+<label class="block font-cinzel mb-2">Name</label>
+<input type="text" class="w-full border-none rounded p-3 text-white" style="background: linear-gradient(to right, #000000, #001a0f)" required>
+</div>
+<div>
+<label class="block font-cinzel mb-2">Email</label>
+<input type="email" class="w-full border-none rounded p-3 text-white" style="background: linear-gradient(to right, #000000, #001a0f)" required>
+</div>
+<div>
+<label class="block font-cinzel mb-2">Message</label>
+<textarea class="w-full border-none rounded p-3 text-white h-32" style="background: linear-gradient(to right, #000000, #001a0f)" required></textarea>
+</div>
+<button type="submit" class="w-full bg-primary text-white py-3 font-cinzel !rounded-button hover:bg-opacity-80 transition-all cursor-pointer whitespace-nowrap">
+Send Message
+</button>
+</form>
+</div>
+</div>
+</section>
+<footer class="bg-black py-12">
+<div class="container mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div>
+<h3 class="font-['Pacifico'] text-2xl golden-gradient mb-4">L'Occhio Oscuro</h3>
+<p class="font-cormorant">Where mystery meets luxury</p>
+</div>
+<div>
+<h4 class="font-cinzel text-lg golden-gradient mb-4">Navigation</h4>
+<ul class="space-y-2 font-cormorant">
+<li><a href="#collections" class="hover:text-primary cursor-pointer">Collections</a></li>
+<li><a href="#heritage" class="hover:text-primary cursor-pointer">Heritage</a></li>
+<li><a href="#artifacts" class="hover:text-primary cursor-pointer">Artifacts</a></li>
+<li><a href="#stories" class="hover:text-primary cursor-pointer">Sacred Stories</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-cinzel text-lg golden-gradient mb-4">Contact</h4>
+<ul class="space-y-2 font-cormorant">
+<li>Temple Location: 123 Mystic Avenue</li>
+<li>Sacred Hours: 10:00 - 20:00</li>
+<li>Ritual Call: +1 234 567 890</li>
+<li>Sacred Mail: contact@locchiooscuro.com</li>
+</ul>
+</div>
+<div>
+<h4 class="font-cinzel text-lg golden-gradient mb-4">Newsletter</h4>
+<form class="space-y-4">
+<input type="email" placeholder="Enter your email" class="w-full border-none rounded p-3 text-white" style="background: linear-gradient(to right, #000000, #001a0f)">
+<button type="submit" class="w-full bg-primary text-white py-2 font-cinzel !rounded-button hover:bg-opacity-80 transition-all cursor-pointer whitespace-nowrap">
+Subscribe
+</button>
+</form>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-gray-800 text-center font-cormorant">
+<p>&copy; 2025 L'Occhio Oscuro. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const menuOverlay = document.getElementById('menuOverlay');
+const menuLinks = menuOverlay.getElementsByTagName('a');
+// Menu toggle
+menuBtn.addEventListener('click', () => {
+menuOverlay.classList.toggle('hidden');
+menuBtn.querySelector('i').classList.toggle('ri-menu-line');
+menuBtn.querySelector('i').classList.toggle('ri-close-line');
+});
+Array.from(menuLinks).forEach(link => {
+link.addEventListener('click', () => {
+menuOverlay.classList.add('hidden');
+menuBtn.querySelector('i').classList.add('ri-menu-line');
+menuBtn.querySelector('i').classList.remove('ri-close-line');
+});
+});
+// Product popup
+const createProductPopup = (product) => {
+const popup = document.createElement('div');
+popup.className = 'product-popup';
+popup.innerHTML = `
+<div class="flex justify-between items-start mb-6">
+<h3 class="text-2xl font-cinzel golden-gradient">${product.name}</h3>
+<button class="close-popup text-white"><i class="ri-close-line text-2xl"></i></button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div>
+<img src="${product.image}" class="w-full h-96 object-cover rounded-lg" alt="${product.name}">
+<div class="product-gallery">
+${Array(4).fill().map((_, i) => `
+<img src="https://readdy.ai/api/search-image?query=luxury fashion clothing detail dark background&width=200&height=200&flag=1d4e6b937045fad2d54384cd04e420a4&seq=${i + 20}&orientation=squarish" alt="Product detail">
+`).join('')}
+</div>
+</div>
+<div>
+<p class="text-2xl font-cormorant mb-4">${product.price}</p>
+<p class="font-cormorant mb-6">${product.description}</p>
+<div class="mb-6">
+<h4 class="font-cinzel mb-2">Size</h4>
+<div class="size-selector">
+${['XS', 'S', 'M', 'L', 'XL'].map(size => `
+<button class="size-btn" data-size="${size}">${size}</button>
+`).join('')}
+</div>
+</div>
+<button class="w-full bg-primary text-white py-3 font-cinzel !rounded-button hover:bg-opacity-80 transition-all">
+Add to Cart
+</button>
+</div>
+</div>
+`;
+document.body.appendChild(popup);
+const closeBtn = popup.querySelector('.close-popup');
+closeBtn.addEventListener('click', () => {
+popup.remove();
+});
+const sizeBtns = popup.querySelectorAll('.size-btn');
+sizeBtns.forEach(btn => {
+btn.addEventListener('click', () => {
+sizeBtns.forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+});
+});
+setTimeout(() => popup.classList.add('active'), 10);
+};
+// Add click events to product cards
+document.querySelectorAll('.product-card').forEach(card => {
+card.addEventListener('click', () => {
+const name = card.querySelector('h3').textContent;
+const price = card.querySelector('p').textContent;
+const image = card.querySelector('img').src;
+const description = "Crafted with the finest materials and ancient techniques, this piece embodies the perfect balance between mystical heritage and contemporary luxury fashion.";
+createProductPopup({ name, price, image, description });
+});
+});
+// Form submission
+document.getElementById('contactForm').addEventListener('submit', (e) => {
+e.preventDefault();
+const formData = new FormData(e.target);
+console.log('Form submitted:', Object.fromEntries(formData));
+e.target.reset();
+});
+// Scroll reveal animation
+const observerOptions = {
+threshold: 0.1
+};
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('animate-fade-in');
+entry.target.classList.add('visible');
+}
+});
+}, observerOptions);
+document.querySelectorAll('section, .collection-card, .product-card, article').forEach(element => {
+element.classList.add('scroll-reveal');
+observer.observe(element);
+});
+</script>
 </body>
 </html>
